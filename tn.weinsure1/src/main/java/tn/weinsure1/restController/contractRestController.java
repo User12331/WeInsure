@@ -21,7 +21,7 @@ import tn.weinsure1.service.IUserService;
 
 @RestController
 public class contractRestController {
-
+/*
 	@Autowired
 	IContractService ic;
 	IUserService iu;
@@ -202,6 +202,6 @@ public class contractRestController {
 
 			return ic.CapitalMixte(prime,  ((User)principal).getId(), n);
 			}
-		
+		*/
 
 }

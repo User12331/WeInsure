@@ -48,6 +48,72 @@ Notes:	decreasing heading by 0.4em with every subsequent heading level
     box-sizing: border-box;
 }
 
+.returnbuttons {
+    font-family: tahoma;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    border-radius: 8px;
+    background-color: white;
+    color: red;
+    border: 2px solid red;
+    transition-duration: 0.4s;
+}
+    .returnbuttons:hover {
+        background-color: red;
+        color: white;
+    }
+
+
+.imgbutton {
+    position: relative;
+    width: 100%;
+}
+
+    /* Make the image responsive */
+    .imgbutton img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Style the button and place it in the middle of the imgbutton/image */
+    .imgbutton .btnimg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        font-size: 16px;
+        padding: 10px 24px;
+        border-radius: 8px;
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+        transition-duration: 0.4s;
+    }
+
+        .imgbutton .btnimg:hover {
+            background-color: red;
+            color: white;
+        }
+.contractbutton {
+    padding: 10px 24px;
+    border-radius: 8px;
+    background-color: white;
+    color: red;
+    border: 2px solid red;
+    transition-duration: 0.4s;
+}
+.contractbutton:hover {
+    background-color: red; 
+    color: white;
+}
+
+.messagecontract{
+	color:red;
+}
+
 .inputcontract {
     border: 1px solid DarkRed;
 }
@@ -4491,6 +4557,8 @@ section {
     border-collapse: collapse;
     overflow: visible;
     border: 1px solid DarkRed;
+    float:right;
+    width:50%;
 }
 
 .table-data2.table thead th {

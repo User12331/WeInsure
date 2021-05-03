@@ -2,9 +2,9 @@ package tn.weinsure1.service;
 
 
 import java.util.List;
-import org.springframework.security.core.Authentication;
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
+import tn.weinsure1.entities.User;
 
 public interface IContractService {
 
@@ -18,10 +18,9 @@ public interface IContractService {
 	void ContractToUser(long cntID, long userID);
 	float TotalPricing();
 	List<Contract> RetrieveContractsByUserId(long id);
-	float CapitalVieUnique(float C, long userid, int duree);
 	float PrimeVieUnique(float prime, long userid, int duree);
 	double RITP(double prime,long userid);
-	double RITC(double d,long userid);
+	double RITC(double capital,long userid);
 	void MAJContractPrice(float price,long cntid);
 	float CapitalMixte(double prime,long userid,int n);
 	void DeleteContractsByUserId(long id);
@@ -33,4 +32,9 @@ public interface IContractService {
 	void DeleteExpiredContracts();
 	void ApproveContract(long cntid);
 	float TotalCost();
+	long addOrUpdateContract(Contract contract);
+	List<Contract> retrieveContractsbytype(ContractType type);
+	List<User> retrieveallusers();
+	float CapitalVieUnique(float C, long userid, int duree,double taux);
+
 }

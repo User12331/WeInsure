@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
+import tn.weinsure1.entities.User;
 
 @Repository
 public interface ContractRepository extends CrudRepository<Contract,Long> {
@@ -71,4 +72,10 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
 	
 	@Query("Select c from Contract c where c.approved='false'")
 	List<Contract> ShowNotApprovedContracts();
+	
+	@Query("Select c from Contract c where c.Type=:type ")
+	public List<Contract> retrieveContractsbytype(@Param("type")ContractType type);
+
+	@Query("Select u from USER u")
+	public List<User> retrieveallusers();
 }

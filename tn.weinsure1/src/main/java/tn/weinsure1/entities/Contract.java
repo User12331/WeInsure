@@ -12,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,6 +58,55 @@ public class Contract implements Serializable {
 	private float cost;
 	
 
+	public Contract(Date creation_date, Date expiration_date, int duration, float price,
+			ContractType type, double rate, boolean approved, float cost) {
+		this.Creation_date = creation_date;
+		this.Expiration_date = expiration_date;
+		this.Duration = duration;
+		this.Price = price;
+		this.Type = type;
+		this.rate = rate;
+		this.approved = approved;
+		this.cost = cost;
+	}
+	public Contract(Date creation_date, Date expiration_date, int duration, float price,
+			ContractType type, double rate, boolean approved, float cost,User user) {
+		this.Creation_date = creation_date;
+		this.Expiration_date = expiration_date;
+		this.Duration = duration;
+		this.Price = price;
+		this.Type = type;
+		this.rate = rate;
+		this.approved = approved;
+		this.cost = cost;
+		this.user=user;
+	}
+	
+	public Contract(Long idcontract, Date creation_date, Date expiration_date, int duration, float price,
+			ContractType type, double rate, boolean approved, float cost) {
+		this.idcontract = idcontract;
+		this.Creation_date = creation_date;
+		this.Expiration_date = expiration_date;
+		this.Duration = duration;
+		this.Price = price;
+		this.Type = type;
+		this.rate = rate;
+		this.approved = approved;
+		this.cost = cost;
+	}
+
+	public Contract(Long idcontract, Date creation_date, Date expiration_date, int duration, float price,
+			ContractType type, double rate, boolean approved, float cost,User user) {
+		this.idcontract = idcontract;
+		this.Creation_date = creation_date;
+		this.Expiration_date = expiration_date;
+		this.Duration = duration;
+		this.Price = price;
+		this.Type = type;
+		this.rate = rate;
+		this.approved = approved;
+		this.cost = cost;
+	}
 	
 	public float getCost() {
 		return cost;
@@ -122,12 +170,12 @@ public class Contract implements Serializable {
 	}
 	
 	@JsonIgnore
-	@ManyToOne( fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "USER_ID",referencedColumnName="USER_ID")
 	 private User user;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy="transactionprice")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="transactionprice")
 	private List<Transaction> transactionCredit;
 	 
 
@@ -161,11 +209,6 @@ public class Contract implements Serializable {
 		this.Type = type;
 		this.Document = document;
 	}
-	public Contract(float price, User user) {
-		super();
-		Price = price;
-		this.user = user;
-	}
-		
+
 	
 }
