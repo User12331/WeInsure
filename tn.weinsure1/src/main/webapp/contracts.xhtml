@@ -1,0 +1,268 @@
+﻿<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/template.xhtml">
+
+    <ui:param name="page_name" value="Accueil" />
+
+    <ui:define name="menu">
+        <head>
+            <!-- Required meta tags-->
+
+            <meta charset="UTF-8" />
+
+
+            <!-- Title Page-->
+
+            <title>Tables</title>
+            <!-- Fontfaces CSS-->
+            <link href="css/font-face.css" rel="stylesheet" media="all" />
+            <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all" />
+            <link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all" />
+            <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all" />
+            <!-- Bootstrap CSS-->
+            <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all" />
+            <!-- Vendor CSS-->
+            <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all" />
+            <link href="vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all" />
+            <link href="vendor/wow/animate.css" rel="stylesheet" media="all" />
+            <link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all" />
+            <link href="vendor/slick/slick.css" rel="stylesheet" media="all" />
+            <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all" />
+            <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all" />
+            <!-- Main CSS-->
+            <link href="css/theme.css" rel="stylesheet" media="all" />
+        </head>
+
+        <body class="animsition">
+     <!-- PAGE CONTAINER-->
+
+                <div class="page-container">
+                   
+                    <!-- MAIN CONTENT-->
+
+                    <div class="main-content">
+
+                        <div class="section__content section__content--p30">
+
+                            <div class="container-fluid">
+
+
+                                <div class="row">
+
+                                    <div class="col-md-12">
+
+
+                                        <!-- DATA TABLE -->
+
+                                        <h3 class="title-5 m-b-35">Les Contrats</h3>
+
+                                        <div class="table-responsive table-responsive-data2">
+                                            <h:panelGroup columns="2">
+                                                <h:form>
+                                                    <table class="table table-data2">
+
+                                                        <tr>
+
+                                                            <td><h:outputText value="Approuvée"></h:outputText></td>
+                                                            <td><h:inputText value="#{ContractController.approved}" class="inputcontract"></h:inputText></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><h:outputText value="Contract ID"></h:outputText></td>
+                                                            <td><h:inputText value="#{ContractController.cntid}" class="inputcontract"></h:inputText></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><h:outputText value="Type"></h:outputText></td>
+                                                            <td>
+                                                                <h:selectOneMenu value="#{ContractController.contracttype}">
+                                                                    <f:selectItem itemLabel="Choisir le Type" />
+                                                                    <f:selectItems value="#{ContractController.types}" />
+                                                                </h:selectOneMenu>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><h:outputText value="Date de création"></h:outputText></td>
+                                                            <td>
+                                                                <h:inputText value="#{ContractController.cre_date}" class="inputcontract">
+                                                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                                </h:inputText>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><h:outputText value="Date d'éxpiration"></h:outputText></td>
+                                                            <td>
+                                                                <h:inputText value="#{ContractController.exp_date}" class="inputcontract">
+                                                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                                </h:inputText>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><h:outputText value="Durée"></h:outputText></td>
+                                                            <td><h:inputText value="#{ContractController.duration}" class="inputcontract"></h:inputText></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h:outputText value="Prime"></h:outputText>
+                                                            </td>
+                                                            <td>
+                                                                <h:inputText id="validatePrice" value="#{ContractController.price}"
+                                                                             required="true" requiredMessage="Il faut saisir la prime du contrat !"
+                                                                             validatorMessage="La prime de contrat ne peut pas être nulle !" class="inputcontract">
+                                                                    <f:converter converterId="javax.faces.Float"></f:converter>
+                                                                    <f:validateDoubleRange minimum="1" maximum="9000000" for="validatePrice"></f:validateDoubleRange>
+                                                                    <h:message for="validatePrice" style="color=green" />
+                                                                </h:inputText>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td>
+                                                                <h:outputText value="Capital/Rente"></h:outputText>
+                                                            </td>
+                                                            <td>
+                                                                <h:inputText id="validateCost" value="#{ContractController.cost}" class="inputcontract"
+                                                                             required="true" requiredMessage="Il faut saisir la Rente/Capital du contrat !"
+                                                                             validatorMessage="La Rente/Capital de contrat ne peut pas être nulle !">
+                                                                    <f:converter converterId="javax.faces.Float"></f:converter>
+                                                                    <f:validateDoubleRange minimum="1" maximum="9000000" for="validatePrice"></f:validateDoubleRange>
+                                                                    <h:message for="validatePrice" style="color=green" />
+                                                                </h:inputText>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><h:outputText value="Taux"></h:outputText></td>
+                                                            <td>
+                                                                <h:inputText value="#{ContractController.rate}" class="inputcontract">
+                                                                    <f:converter converterId="javax.faces.Double"></f:converter>
+                                                                </h:inputText>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <h:commandButton value="Ajouter Contrat" action="#{ContractController.addContract()}" />
+                                                                <span STYLE="padding:0 0 0 20px;"></span>
+                                                                    <h:commandButton action="#{ContractController.updateContract()}" value="Mettre A jour Contrat" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </h:form>
+                                            </h:panelGroup>
+                                            <br />
+                                            <br />
+                                            <h:panelGroup columns="2">
+                                                <h:form>
+                                                    <h:dataTable value="#{ContractController.contracts}" var="contract" border="1" styleClass="table table-data2">
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Approuvé" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.approved == true ? 'Oui' : 'Non'}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="ID Contrat" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.idcontract}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Type" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.type}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Date de Création" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.creation_date}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Date d'éxpiration" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.expiration_date}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Durée" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.duration}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Prime" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.price}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Capital/Rente" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.cost}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Taux" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.rate}" />
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Assuré" />
+                                                            </f:facet>
+                                                            <h:outputText value="#{contract.user.firstName} #{contract.user.lastName}" />
+                                                        </h:column>
+                                                    </h:dataTable>
+                                                </h:form>
+                                            </h:panelGroup>
+
+                                        </div>
+                                        <!-- END DATA TABLE -->
+                                    </div>
+                                </div>
+                                                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- Jquery JS-->
+
+            <script src="vendor/jquery-3.2.1.min.js"></script>
+            <!-- Bootstrap JS-->
+
+            <script src="vendor/bootstrap-4.1/popper.min.js"></script>
+
+            <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
+            <!-- Vendor JS       -->
+
+            <script src="vendor/slick/slick.min.js">
+            </script>
+
+            <script src="vendor/wow/wow.min.js"></script>
+
+            <script src="vendor/animsition/animsition.min.js"></script>
+
+            <script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+            </script>
+
+            <script src="vendor/counter-up/jquery.waypoints.min.js"></script>
+
+            <script src="vendor/counter-up/jquery.counterup.min.js">
+            </script>
+
+            <script src="vendor/circle-progress/circle-progress.min.js"></script>
+
+            <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+            <script src="vendor/chartjs/Chart.bundle.min.js"></script>
+
+            <script src="vendor/select2/select2.min.js">
+            </script>
+            <!-- Main JS-->
+
+            <script src="js/main.js"></script>
+            <!-- end document-->
+        </body>
+    </ui:define>
+</ui:composition>
