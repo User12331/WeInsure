@@ -466,4 +466,10 @@ return contract.getIdcontract();
 		return ContractRepository.retrieveallusers();
 	}
 
+	/*@Override
+	public List<Contract> sortByDuration() {
+		List<Contract> cnt = ContractRepository.sortByDuration();
+		return cnt;
+	}*/
+
 }

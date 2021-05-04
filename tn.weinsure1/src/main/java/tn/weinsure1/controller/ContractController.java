@@ -82,9 +82,9 @@ public class ContractController {
 			navigateTo="null";
 		}
 		else if (cost==0)
-				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Vie,rate,(float) ic.RITP(price, userid,rate)));
-				else if (price ==0)
-				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,(float) ic.RITC(cost, userid,rate),ContractType.Vie,rate,cost));
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Rente,rate,(float) ic.RITP(price, userid,rate)));
+		else if (price ==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,(float) ic.RITC(cost, userid,rate),ContractType.Rente,rate,cost));
 				}
 		return navigateTo;	
 	}

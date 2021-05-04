@@ -168,8 +168,9 @@
                 <div class="row">
 
                     <h1 class="title-5 m-b-35">Ajout de contrat rente</h1>
-
-                    <div class="table-responsive table-responsive-data2">
+                    <p:pieChart value="#{chartController.pieChartModel}"
+                                style="width: 350px; height: 250px;"
+                                showDataLabels="true" legendPosition="ne" />                    <div class="table-responsive table-responsive-data2">
                         <center>
                             <h:panelGrid columns="2">
                                 <h:form id="addcntform">
@@ -182,7 +183,7 @@
 
                                         </tr>
                                         <tr>
-                                         
+
                                             <td><h:outputText value="Date de création"></h:outputText></td>
                                             <td>
                                                 <h:inputText value="#{ContractController.cre_date}" class="inputcontract" p:placeholder="dd-MM-yyyy">
