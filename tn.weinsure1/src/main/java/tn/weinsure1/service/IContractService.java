@@ -18,9 +18,9 @@ public interface IContractService {
 	void ContractToUser(long cntID, long userID);
 	float TotalPricing();
 	List<Contract> RetrieveContractsByUserId(long id);
-	float PrimeVieUnique(float prime, long userid, int duree);
-	double RITP(double prime,long userid);
-	double RITC(double capital,long userid);
+	float PrimeVieUnique(float prime, long userid, int duree,double taux);
+	double RITP(double prime,long userid,double taux);
+	double RITC(double capital,long userid,double taux);
 	void MAJContractPrice(float price,long cntid);
 	float CapitalMixte(double prime,long userid,int n);
 	void DeleteContractsByUserId(long id);

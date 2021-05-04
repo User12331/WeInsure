@@ -2,8 +2,14 @@ package tn.weinsure1.controller;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,7 +17,9 @@ import org.springframework.stereotype.Controller;
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
 import tn.weinsure1.entities.User;
+import tn.weinsure1.repository.UserRepository;
 import tn.weinsure1.service.IContractService;
+import tn.weinsure1.service.ITableMortaliteService;
 import tn.weinsure1.service.IUserService;
 import tn.weinsure1.service.IsinisterService;
 
@@ -25,6 +33,7 @@ public class ContractController {
 	IContractService ic;
 	IUserService iu;
 	IsinisterService is;
+	ITableMortaliteService tr;
 	
 	private List<Contract> contracts,rentecontracts,viecontracts;
 	private boolean approved;
@@ -36,6 +45,155 @@ public class ContractController {
 	private float price, cost;
 	private double rate;
 	private long userid, cntid, cntIdToBeUpdated;
+
+	
+	public String addContract(){
+		Date cr_date= new Date();
+		LocalDate exp;
+		String navigateTo="/contracts?faces-redirect=true";
+		if (cre_date==null)
+		{
+		cre_date = cr_date;
+		exp = cr_date.toInstant()
+			      .atZone(ZoneId.systemDefault())
+			      .toLocalDate().plusYears(duration);}
+		else {exp = cre_date.toInstant()
+			      .atZone(ZoneId.systemDefault())
+			      .toLocalDate().plusYears(duration);}
+		if (contracttype==ContractType.Vie)
+		{
+			if (price!=0 && cost !=0)
+		{
+			FacesMessage facesMessage= new FacesMessage("Merci de saisir seulement le capital ou bien la prime !");
+			FacesContext.getCurrentInstance().addMessage("addcntform:pricecost", facesMessage);
+			navigateTo="null";
+		}
+		else if (cost==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Vie,rate,ic.PrimeVieUnique(price, userid, duration,rate)));
+				else if (price ==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,ic.CapitalVieUnique(cost, userid, duration, rate),ContractType.Vie,rate,cost));
+				
+		}
+		else if (contracttype==ContractType.Rente)
+		{if (price!=0 && cost !=0)
+		{
+			FacesMessage facesMessage= new FacesMessage("Merci de saisir seulement le capital ou bien la prime !");
+			FacesContext.getCurrentInstance().addMessage("addcntform:pricecost", facesMessage);
+			navigateTo="null";
+		}
+		else if (cost==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Vie,rate,(float) ic.RITP(price, userid,rate)));
+				else if (price ==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,(float) ic.RITC(cost, userid,rate),ContractType.Vie,rate,cost));
+				}
+		return navigateTo;	
+	}
+
+	public String addVieContract(){
+		Date cr_date= new Date();
+		userid=1L;
+		LocalDate exp;
+		String navigateTo="/ucontracts?faces-redirect=true";
+		if (cre_date==null)
+		{
+		cre_date = cr_date;
+		exp = cr_date.toInstant()
+			      .atZone(ZoneId.systemDefault())
+			      .toLocalDate().plusYears(duration);}
+		else {exp = cre_date.toInstant()
+			      .atZone(ZoneId.systemDefault())
+			      .toLocalDate().plusYears(duration);}
+		if (price!=0 && cost !=0)
+		{
+			FacesMessage facesMessage= new FacesMessage("Merci de saisir seulement le capital ou bien la prime !");
+			FacesContext.getCurrentInstance().addMessage("addcntform:pricecost", facesMessage);
+			navigateTo="null";
+		}
+		else if (cost==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Vie,rate,ic.PrimeVieUnique(price, userid, duration,rate)));
+		else if (price ==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,ic.CapitalVieUnique(cost, userid, duration, rate),ContractType.Vie,rate,cost));
+		return navigateTo;	
+	}
+	
+	public String addRenteContract(){
+		Date cr_date= new Date();
+		LocalDate exp;
+		userid=1L;
+		String navigateTo="/ucontracts?faces-redirect=true";
+		if (cre_date==null)
+		{
+		cre_date = cr_date;
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(iu.RetrieveUser(Long.toString(userid)).getBirthdate());
+		int BDay = calendar.get(Calendar.YEAR);
+		LocalDate now = LocalDate.now();
+		int ageClient = now.getYear()-BDay;
+		duration=tr.findAgeMax()-ageClient;
+		exp = cr_date.toInstant()
+			      .atZone(ZoneId.systemDefault())
+			      .toLocalDate().plusYears(duration);}
+		else {exp = cre_date.toInstant()
+			      .atZone(ZoneId.systemDefault())
+			      .toLocalDate().plusYears(duration);}
+		if (price!=0 && cost !=0)
+		{
+			FacesMessage facesMessage= new FacesMessage("Merci de saisir seulement le capital ou bien la prime !");
+			FacesContext.getCurrentInstance().addMessage("addcntform:pricecost", facesMessage);
+			navigateTo="null";
+		}
+		else if (cost==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Rente,rate,(float) ic.RITP(price, userid,rate)));
+		else if (price ==0)
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,(float) ic.RITC(cost, userid,rate),ContractType.Rente,rate,cost));
+				
+		return navigateTo;}
+	
+	public String updateContract(){
+		ic.addOrUpdateContract(new Contract(cntid,cre_date,exp_date,duration,price,contracttype,rate,approved,cost));
+		ic.ContractToUser(cntIdToBeUpdated, userid);
+		return "/contracts?faces-redirect=true";
+	}
+
+	public String deleteContract(String cntid){
+		ic.DeleteContract(Long.parseLong(cntid));
+		return "/contracts?faces-redirect=true";
+	}
+	
+	public String afficherContract(Contract cnt) {
+		this.setApproved(cnt.isApproved());
+		this.setCntid(cnt.getIdcontract());
+		this.setContracttype(cnt.getType());
+		this.setCre_date(cnt.getCreation_date());
+		this.setExp_date(cnt.getExpiration_date());
+		this.setDuration(cnt.getDuration());
+		this.setPrice(cnt.getPrice());
+		this.setCost(cnt.getCost());
+		this.setRate(cnt.getRate());
+		this.setCntIdToBeUpdated(cnt.getIdcontract());
+		return "/addcontract?faces-redirect=true";
+		}
+	
+	public String affecterUsertoContract(){
+		ic.ContractToUser(cntIdToBeUpdated, userid);
+		return "/contracts?faces-redirect=true";
+	}
+	
+	public String approveContract(Contract cnt){
+		ic.ApproveContract(cnt.getIdcontract());
+		return "/contracts?faces-redirect=true";	}
+
+	public String resignContract(String cntid){
+		String navigateTo="null";
+		
+		
+		return navigateTo;
+	}
+	
+	///SETTERS GETTER
+	public void setContracts(List<Contract> contracts) {
+		this.contracts = contracts;
+	}
 
 	public List<User> getUsers(){
 		return (ic.retrieveallusers());
@@ -63,72 +221,7 @@ public class ContractController {
 	public void setViecontracts(List<Contract> viecontracts) {
 		this.viecontracts = viecontracts;
 	}
-
-	public String addContract(){
-		LocalDate exp = (new Date()).toInstant()
-			      .atZone(ZoneId.systemDefault())
-			      .toLocalDate().plusYears(duration);
-		if (contracttype==ContractType.Vie)
-		{
-			if (cost==0)
-				ic.addOrUpdateContract(new Contract(new Date(),Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Vie,rate,approved,ic.PrimeVieUnique(price, userid, duration)));
-				else if (price ==0)
-				ic.addOrUpdateContract(new Contract(new Date(),Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,ic.CapitalVieUnique(cost, userid, duration, rate),ContractType.Vie,rate,approved,cost));
-		}
-		else if (contracttype==ContractType.Rente)
-		{
-			if (cost==0)
-				ic.addOrUpdateContract(new Contract(new Date(),Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Vie,rate,approved,(float) ic.RITP(price, userid)));
-				else if (price ==0)
-				ic.addOrUpdateContract(new Contract(new Date(),Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,(float) ic.RITC(cost, userid),ContractType.Vie,rate,approved,cost));
-				}
-		return "/contractvie?faces-redirect=true";	
-	}
 	
-	public String updateContract(){
-		ic.addOrUpdateContract(new Contract(cntIdToBeUpdated,cre_date,exp_date,duration,price,contracttype,rate,approved,cost));
-		ic.ContractToUser(cntIdToBeUpdated, userid);
-		return "/showcontract.jsf?faces-redirect=true";
-	}
-	
-	public String addCapitalVieUniqueContract(){
-		LocalDate exp = (new Date()).toInstant()
-			      .atZone(ZoneId.systemDefault())
-			      .toLocalDate().plusYears(duration);
-		ic.addOrUpdateContract(new Contract(new Date(),Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,ic.CapitalVieUnique(cost, userid, duration, rate),ContractType.Vie,rate,approved,cost));
-		return "/contractvie?faces-redirect=true";
-	}
-	
-	public void deleteContract(String cntid){
-		ic.DeleteContract(Long.parseLong(cntid));
-	}
-	
-	public void afficherContract(Contract cnt) {
-		this.setApproved(cnt.isApproved());
-		this.setCntid(cnt.getIdcontract());
-		this.setContracttype(cnt.getType());
-		this.setCre_date(cnt.getCreation_date());
-		this.setExp_date(cnt.getExpiration_date());
-		this.setDuration(cnt.getDuration());
-		this.setPrice(cnt.getPrice());
-		this.setCost(cnt.getCost());
-		this.setRate(cnt.getRate());
-		this.setCntIdToBeUpdated(cnt.getIdcontract());
-		}
-	
-	public void affecterUsertoContract(){
-		ic.ContractToUser(cntIdToBeUpdated, userid);
-	}
-	
-	public String approveContract(Contract cnt){
-		ic.ApproveContract(cnt.getIdcontract());
-		return "/contractvie?faces-redirect=true";
-	}
-	
-	public void setContracts(List<Contract> contracts) {
-		this.contracts = contracts;
-	}
-
 	public boolean isApproved() {
 		return approved;
 	}

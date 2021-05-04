@@ -2,8 +2,9 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:s="http://primefaces.org/ui"
+                xmlns:s="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/template/template.xhtml">
 
     <ui:param name="page_name" value="Ajout d'un contrat Vie" />
@@ -62,50 +63,53 @@
                                     <div class="table-responsive table-responsive-data2">
                                         <center>
                                             <h:panelGrid columns="2">
-                                                <h:form>
+                                                <h:form id="addcntform">
                                                     <h:button value="Retour" outcome="contracts.jsf" class="returnbuttons" />
                                                     <table class="table table-data2">
-
                                                         <tr>
 
                                                             <td><h:outputText value="Approuvée"></h:outputText></td>
-                                                            <td><h:inputText value="#{ContractController.approved}" class="inputcontract"></h:inputText></td>
+                                                            <td><h:selectBooleanCheckbox value="#{ContractController.approved}" /></td>
                                                         </tr>
                                                         <tr>
                                                             <td><h:outputText value="Contract ID"></h:outputText></td>
-                                                            <td><h:inputText disabled="true" value="#{ContractController.cntid}" class="inputcontract"></h:inputText></td>
+                                                            <td><h:inputText value="#{ContractController.cntid}" disabled="true" class="inputcontract" s:placeholder="Ce champs est automatique"></h:inputText></td>
                                                         </tr>
                                                         <tr>
                                                             <td><h:outputText value="Type"></h:outputText></td>
-                                                            <td><h:inputText disabled="true" value="Vie" class="inputcontract"></h:inputText></td>
-
+                                                            <td>
+                                                                <h:selectOneMenu value="#{ContractController.contracttype}" required="true" requiredmessage="ce champ est obligatoire">
+                                                                    <f:selectItem itemLabel="Choisir le type du contrat" />
+                                                                    <f:selectItems value="#{ContractController.types}" />
+                                                                </h:selectOneMenu>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td><h:outputText value="Date de création"></h:outputText></td>
                                                             <td>
-                                                                <h:inputText value="#{ContractController.cre_date}" class="inputcontract" p:placeholder="dd-MM-yyyy">
+                                                                <h:inputText value="#{ContractController.cre_date}" class="inputcontract" s:placeholder="dd-MM-yyyy">
                                                                     <f:convertDateTime pattern="dd-MM-yyyy" />
                                                                 </h:inputText>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td><h:outputText value="Date d'éxpiration"></h:outputText></td>
-                                                            <td>
-                                                                <h:inputText value="#{ContractController.exp_date}" class="inputcontract" p:placeholder="dd-MM-yyyy">
-                                                                    <f:convertDateTime pattern="dd-MM-yyyy" />
-                                                                </h:inputText>
-                                                            </td>
+                                                            <p:outputLabel for="inline" value="Creation date" />
+                                                            <p:calendar id="inline" value="#{calendar.date}" mode="popup" />                                                            
                                                         </tr>
                                                         <tr>
                                                             <td><h:outputText value="Durée"></h:outputText></td>
-                                                            <td><h:inputText value="#{ContractController.duration}" class="inputcontract"></h:inputText></td>
+                                                            <td>
+                                                                <h:inputText value="#{ContractController.duration}" class="inputcontract" required="true"
+                                                                             requiredmessage="ce champs est obligatoire"></h:inputText>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
                                                                 <h:outputText value="Prime"></h:outputText>
                                                             </td>
                                                             <td>
-                                                                <h:inputText id="validatePrice" value="#{ContractController.price}" class="inputcontract">
+
+                                                                <h:inputText id="validatePrice" value="#{ContractController.price}" class="inputcontract" onclick="return alert('il faut saisir un capital ou bien une prime')">
                                                                     <f:converter converterId="javax.faces.Float"></f:converter>
                                                                 </h:inputText>
                                                             </td>
@@ -116,7 +120,7 @@
                                                                 <h:outputText value="Capital/Rente"></h:outputText>
                                                             </td>
                                                             <td>
-                                                                <h:inputText id="validateCost" value="#{ContractController.cost}" class="inputcontract">
+                                                                <h:inputText id="validateCost" value="#{ContractController.cost}" class="inputcontract" onclick="return alert('il faut saisir un capital ou bien une prime')">
                                                                     <f:converter converterId="javax.faces.Float"></f:converter>
                                                                 </h:inputText>
                                                             </td>
@@ -126,7 +130,7 @@
                                                             <td>
                                                                 <h:inputText id="validateRate" value="#{ContractController.rate}" class="inputcontract"
                                                                              required="true" requiredMessage="Il faut saisir le taux !"
-                                                                             validatorMessage="Le taux doit être entre 0.01 et 0.7">
+                                                                             validatorMessage="Le taux doit être entre 0 et 0.70">
                                                                     <f:converter converterId="javax.faces.Double"></f:converter>
                                                                     <f:validateDoubleRange minimum="0.01" maximum="0.70" for="validateRate"></f:validateDoubleRange>
                                                                     <h:message for="validateRate" styleClass="messagecontract" />
@@ -138,13 +142,14 @@
                                                             <td>
                                                                 <h:selectOneMenu value="#{ContractController.userid}">
                                                                     <f:selectItem itemLabel="Choisir l'assuré" />
-                                                                    <f:selectItems var="item" itemLabel="#{item.firstName} #{item.lastName}" itemValue="#{item.id}" value="#{ContractController.users}" />
+                                                                    <f:selectItems var="item" itemLabel="#{item.id} - #{item.firstName} #{item.lastName}" itemValue="#{item.id}" value="#{ContractController.users}" />
                                                                 </h:selectOneMenu>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="2">
-                                                                <h:commandButton value="Ajouter Contrat" action="#{ContractController.addCapitalVieUniqueContract()}" />
+                                                                <h:message for="pricecost" styleclass="messagecontract" /><br />
+                                                                <h:commandButton id="pricecost" value="Ajouter Contrat" action="#{ContractController.addContract()}" />
                                                                 <span STYLE="padding:0 0 0 20px;"></span>
                                                                 <h:commandButton action="#{ContractController.updateContract()}" value="Mettre A jour Contrat" />
                                                             </td>
@@ -152,83 +157,8 @@
                                                     </table>
                                                 </h:form>
                                             </h:panelGrid>
-                                        </center>
-                                        <br />
-                                        <br />
-                                        <h:panelGrid columns="2">
-                                            <h:form>
-                                                <h:dataTable value="#{ContractController.contracts}" var="contract" border="1" styleClass="table table-data2">
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Approuvé" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.approved == true ? 'Oui' : 'Non'}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="ID Contrat" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.idcontract}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Type" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.type}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Date de Création" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.creation_date}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Date d'éxpiration" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.expiration_date}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Durée" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.duration}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Prime" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.price}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Capital/Rente" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.cost}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Taux %" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.rate *100} %" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Assuré" />
-                                                        </f:facet>
-                                                        <h:outputText value="#{contract.user.firstName} #{contract.user.lastName}" />
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Gérer" />
-                                                        </f:facet>
-                                                        <h:commandButton action="#{ContractController.deleteContract(contract.idcontract)}" value="Supprimer" />
-                                                        <h:commandButton action="#{ContractController.afficherContract(contract)}" value="Afficher" />
-                                                    </h:column>
-                                                </h:dataTable>
-                                            </h:form>
-                                        </h:panelGrid>
 
+                                        </center>
                                     </div>
                                     <!-- END DATA TABLE -->
                                 </div>

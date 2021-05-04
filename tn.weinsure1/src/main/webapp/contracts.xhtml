@@ -62,6 +62,8 @@
                                     <div class="table-responsive table-responsive-data2">
                                         <h:panelGrid columns="2">
                                             <h:form>
+                                                <h:button value="Ajouter contrat" outcome="addcontract.jsf" class="returnbuttons" /> 
+
                                                 <h:dataTable value="#{ContractController.contracts}" var="contract" border="1" styleClass="table table-data2">
                                                     <h:column>
                                                         <f:facet name="header">
@@ -127,10 +129,18 @@
                                                         <f:facet name="header">
                                                             <h:outputText value="Gérer" />
                                                         </f:facet>
-                                                        <h:commandButton action="#{ContractController.deleteContract(contract.idcontract)}" value="Supprimer"
-                                                                         onclick="return confirm('Voulez vous vraiment supprimer ce contrat ?')"/>
-                                                        <h:commandButton action="#{ContractController.afficherContract(contract)}" value="Afficher" />
-                                                        <h:commandButton action="#{ContractController.approveContract(contract)}" value="Approuver" />
+                                                        <h:commandLink action="#{ContractController.deleteContract(contract.idcontract)}" value=""
+                                                                       onclick="return confirm('Voulez vous vraiment supprimer ce contrat ?')">
+                                                            <i class="fas fa-minus-circle"></i>
+                                                        </h:commandLink>
+                                                        <h:commandLink action="#{ContractController.afficherContract(contract)}" value=""
+                                                                       onclick="return confirm('Voulez vous vraiment modifier ce contrat ?')">
+                                                            <i class="far fa-edit"></i>
+                                                        </h:commandLink>
+                                                        <h:commandLink action="#{ContractController.approveContract(contract)}" value=""
+                                                                       onclick="return confirm('Voulez vous vraiment approuver ce contrat ?')">
+                                                            <i class="fas fa-check-circle"></i>
+                                                        </h:commandLink>
                                                     </h:column>
                                                 </h:dataTable>
                                             </h:form>
