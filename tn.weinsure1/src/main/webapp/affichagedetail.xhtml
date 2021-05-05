@@ -446,7 +446,7 @@
 											<h:commandButton styleClass="form-group btn btn-sm btn-outline-primary" style="width:100px"
 										value="Update" action="#{sinController.goToUpdateSinistre(sinistre)}"  onclick="return confirm('Do you really want to update your sinister ?')" />
 										<h:commandButton styleClass=" form-group btn btn-sm btn-outline-danger" style="width:100px"
-										 action="#{sinController.removeSinistre(sinistre.idSinistre)}" value="Retirer"  />
+										 action="#{sinController.removeSinistre(sinistre.idSinistre)}" value="Delete"  onclick="return confirm('Do you really want to delete your sinister ?')" />
 										
 										
 									</h:form>
@@ -472,7 +472,7 @@
 <div class="col-lg-8">
                 
 <div class="sh-footer">
-                    <a href="#" class="sh-footer__btn-add-image sh-btn"><i class="icon-Add_Image" /> Add another image</a>
+                
                 </div>
             </div>
         </div>

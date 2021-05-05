@@ -380,6 +380,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		{
 			 s = findcontractdurationBysinister(m,c.getType()) ; 
 		}
+		
 		/*
 		 if (ss.getTypeSinistre().toString().equals(c.getType().toString()) == false)
 		{

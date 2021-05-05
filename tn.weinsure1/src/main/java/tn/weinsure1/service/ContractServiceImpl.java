@@ -492,6 +492,10 @@ return contract.getIdcontract();
 		
 		return ContractRepository.retrieveContractsbytype(type);
 	}
+public Contract retrieveContractsbytype2(ContractType type) {
+		
+		return ContractRepository.retrieveContractsbytype2(type);
+	}
 
 	@Override
 	public List<User> retrieveallusers() {

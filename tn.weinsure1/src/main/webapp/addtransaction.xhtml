@@ -2,6 +2,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
                 
                 >
 <head>
@@ -18,7 +19,7 @@
     
 <meta name="author" content="etheme.com" />
     
-<title>WeInsure</title>
+<title>Sharehub - Responsive HTML5 Template</title>
     <!-- STYLESHEET -->
     <!-- FONTS -->
     <!-- Muli -->
@@ -50,8 +51,7 @@
                 <img src="fonts/icons/sharehub/svg/Sharehub.svg" alt="" />
             </a>
             
-
- <nav>
+             <nav>
                 
 <ul class="sh-header__menu">
                     
@@ -62,6 +62,8 @@
                     </li>
                     </ul>
                     </nav>
+
+
 
             
 <div class="sh-header__search">
@@ -167,58 +169,67 @@
 <main>
     
 <div class="container">
-        <!--sections-->
-        
-<div class="row">
-       
- <h:panelGroup columns="2">
-                                                <h:form>
-                                                    <table class="table table-data2">
+			<!--sections-->
 
+			<div class="row">
+
+				<h:panelGroup columns="2">
+					<h:form>
+						<table class="table table-data2">
+							
+
+
+							<tr>
+								<td><h:outputText class="form-control"
+										value="Type Transaction"></h:outputText></td>
+								<td><h:selectOneMenu value="#transacController.transactionType}" class="form-control">
+										<f:selectItem itemLabel="Choisir le type " class="form-control" />
+								 
+    									<f:selectItem itemValue="PAYPAL"    								 
+											class="form-control" />
+									</h:selectOneMenu></td>	
+									
+									
+							</tr>
+							
+							
+							
+							<tr>
+								<td><h:outputText class="form-control"
+										value="Mes Contrats"></h:outputText></td>
+								<td><h:selectOneMenu value="#{transacController.transactionAmount}"	class="form-control">
+										<f:selectItem itemLabel="Choisir la Prime à payer" class="form-control" />
+										<f:selectItems value="#{transacController.getTypes()}"
+											class="form-control" />
+									</h:selectOneMenu></td>
+							</tr>
+							
+							
   
-                                                        <tr>
-                                                            <td><h:outputText class="form-control" value="Sinister Type"></h:outputText></td>
-                                                            <td>
-                                                                <h:selectOneMenu value="#{sinController.typeSinistre}" class="form-control">
-                                                                    <f:selectItem itemLabel="Choisir le Type" class="form-control" />
-                                                                    <f:selectItems value="#{sinController.types}" class="form-control" />
-                                                                </h:selectOneMenu>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><h:outputText class="form-control" value="Date de Occurence"></h:outputText></td>
-                                                            <td>
-                                                                <h:inputText  class="form-control" value="#{sinController.dateOccurence}" >
-                                                                    <f:convertDateTime pattern="dd-MM-yyyy" />
-                                                                </h:inputText>
-                                                            </td>
-                                                            
-                                                        </tr>
-                                                       
-                                
-                                                                <tr>
-                                                            <td><h:outputText class="form-control" value="Description"></h:outputText></td>
-                                                            <td>
-                                                                <h:inputText  class="form-control" value="#{sinController.description}" >
-                                                                  
-                                                                </h:inputText>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                            <div class="button">
-                                                                <h:commandButton styleClass="form-group btn btn-sm btn-outline-primary" style="width:100px" value="Update Sinister" action="#{sinController.updateSinistre()}"   />
-                                                                <h:message for="btn" />
-                                                                <span STYLE="padding:0 0 0 20px;"></span>
-                                                                  
-                                                            </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </h:form>
-                                            </h:panelGroup>
-            </div>
-        </div>
+														<tr>
+
+
+									<td colspan="2">
+									<h:commandButton id="btn1"
+											value="Ajouter Transaction"
+											styleClass="form-group btn btn-sm btn-outline-dark"
+											action="#{transacController.addTransaction(transacController.getIDContrat(transacController.transactionAmount))}" />
+										<span STYLE="padding: 0 0 0 20px;"></span> <h:message
+											for="btn2" />
+											
+											 <h:button
+											styleClass="form-group btn btn-sm btn-outline-dark" id="btn"
+											value="Retour" outcome="FirstClient" /><span
+										STYLE="padding: 0 0 0 20px;"></span> <!-- action = "/temm?faces-redirect=true"   -->
+										<h:message for="btn3" /></td> </tr> 
+
+
+							
+						</table>
+					</h:form>
+				</h:panelGroup>
+			</div>
+		</div>
    </main>
 <!-- FOOTER --><footer>
     
@@ -229,7 +240,7 @@
 <div class="col-lg-8">
                 
 <div class="sh-footer">
-                    <a href="#" class="sh-footer__btn-add-image sh-btn"><i class="icon-Add_Image" /> Add another image</a>
+         
                 </div>
             </div>
         </div>

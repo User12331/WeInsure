@@ -42,6 +42,7 @@
 						</thead>
 						<tbody>
 						<c:forEach var="sinistre" items="#{sinController.sinistres}">
+						
 							<tr class="tr-shadow">
 								<td style="position: absolute;padding: 50px;font-weight: bold;">#{sinistre.idSinistre}</td>
 								<td><span class="block-email">#{sinistre.user.firstName} #{sinistre.user.lastName}</span></td>
@@ -75,6 +76,7 @@
 							<c:when test="#{sinistre.typeSinistre.toString().equals('casDeces')}">
 							 <h:commandButton styleClass=" form-group btn btn-sm btn-outline-success" style="width:100px"
 										 action="#{sinController.CalculCD(sinistre.idSinistre)}" value="CD" />
+										 
 							</c:when>
 							<c:when test="#{sinistre.typeSinistre.toString().equals('casDecesperiodique')}">
 							 <h:commandButton styleClass=" form-group btn btn-sm btn-outline-success" style="width:100px"

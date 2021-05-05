@@ -9,11 +9,13 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.annotation.MultipartConfig;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,13 +24,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
+import tn.weinsure1.entities.Contract;
+import tn.weinsure1.entities.ContractType;
 import tn.weinsure1.entities.SinisterMotif;
 import tn.weinsure1.entities.User;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.entities.typeSinister;
 import tn.weinsure1.repository.sinisterRepository;
+import tn.weinsure1.service.IContractService;
 import tn.weinsure1.service.ITableMortaliteService;
 import tn.weinsure1.service.IUserService;
 import tn.weinsure1.service.IsinisterService;
@@ -38,12 +42,14 @@ import tn.weinsure1.service.TableMortaliteService;
 @Controller(value = "sinController") // Name of the bean in Spring IoC
 @ELBeanName(value = "sinController") // Name of the bean used by JSF
 @Join(path = "/", to = "/temm.jsf")
-
+@MultipartConfig
 public class SinisterController {
 	@Autowired
 	IsinisterService sinService;
 	@Autowired 
 	sinisterRepository sr ; 
+	@Autowired
+	IContractService cs;
 
 	
 	private Long idSinistre ;
@@ -57,10 +63,29 @@ public class SinisterController {
 	private sinisterstatus status;
 	 
 	private SinisterMotif motifStatus;
+	private Contract tempC ;
+	private ContractType m ; 
 	
-	 private User user;
+	
+	 public ContractType getM() {
+		return m;
+	}
+	public void setM(ContractType m) {
+		this.m = m.VieEntiere;
+	}
+	public Contract getTempC() {
+		return tempC;
+	}
+	public void setTempC(Contract tempC) {
+		this.tempC = tempC;
+	}
+	
+	
+
+	private User user;
 	
 	 private byte[] documents ;
+	
 	 
 	 private List<sinister> sinistres;
 	 private List<sinister> sinistresPerUser;
@@ -174,7 +199,7 @@ public class SinisterController {
 		
 		
 		
-		public String  addSinistre() {
+		public String  addSinistreVE() {
 			Calendar currentdate = Calendar.getInstance(); 
 			Date d = currentdate.getTime();  
 			
@@ -190,7 +215,71 @@ public class SinisterController {
 			FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
 			}
 			else {
-				sinService.addOrUpdateSinistre(new sinister(typeSinistre, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.VieEntiere, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+				navigateTo = "/affichagedetail?faces-redirect=true" ;
+				}
+			return navigateTo; 
+		}
+		public String  addSinistreCD() {
+			Calendar currentdate = Calendar.getInstance(); 
+			Date d = currentdate.getTime();  
+			
+			currentdate.add(Calendar.DAY_OF_MONTH,-5);
+			Date d1= currentdate.getTime();
+			System.out.println(""+d1);
+			String navigateTo = "null"; 
+			System.out.println(""+dateOccurence);
+			
+			if( dateOccurence.compareTo(d1) <0 ){
+				FacesMessage facesMessage= new FacesMessage("Date Invalid: "
+				    	+ "Please check occurence Date");
+			FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+			}
+			else {
+				
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.casDeces, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+				navigateTo = "/affichagedetail?faces-redirect=true" ;
+				}
+			return navigateTo; 
+		}
+		public String  addSinistreCDP() {
+			Calendar currentdate = Calendar.getInstance(); 
+			Date d = currentdate.getTime();  
+			
+			currentdate.add(Calendar.DAY_OF_MONTH,-5);
+			Date d1= currentdate.getTime();
+			System.out.println(""+d1);
+			String navigateTo = "null"; 
+			System.out.println(""+dateOccurence);
+			
+			if( dateOccurence.compareTo(d1) <0 ){
+				FacesMessage facesMessage= new FacesMessage("Date Invalid: "
+				    	+ "Please check occurence Date");
+			FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+			}
+			else {
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.casDecesperiodique, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+				navigateTo = "/affichagedetail?faces-redirect=true" ;
+				}
+			return navigateTo; 
+		}
+		public String  addSinistreTDE() {
+			Calendar currentdate = Calendar.getInstance(); 
+			Date d = currentdate.getTime();  
+			
+			currentdate.add(Calendar.DAY_OF_MONTH,-5);
+			Date d1= currentdate.getTime();
+			System.out.println(""+d1);
+			String navigateTo = "null"; 
+			System.out.println(""+dateOccurence);
+			
+			if( dateOccurence.compareTo(d1) <0 ){
+				FacesMessage facesMessage= new FacesMessage("Date Invalid: "
+				    	+ "Please check occurence Date");
+			FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+			}
+			else {
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.TemporairedecesEmprunteur, description, dateOccurence, sinisterstatus.enAttente, documents,user));
 				navigateTo = "/affichagedetail?faces-redirect=true" ;
 				}
 			return navigateTo; 
@@ -228,9 +317,10 @@ public class SinisterController {
 		return "/sinisterAdminDetails?faces-redirect=ture";
 		}
 		
-		public void updateSinistre()
+		public String updateSinistre()
 		{  
 		  sinService.addOrUpdateSinistre(new sinister(sinistreIdToBeUpdated,typeSinistre, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+		return "/affichagedetail?faces-redirect=ture";
 		}
 		
 		public User getUser() {
@@ -300,6 +390,13 @@ public class SinisterController {
 			    return "/updateSinister?faces-redirect=true";
 
 				}
+			   public void verif(ContractType s) {
+				   
+				  tempC = this.cs.retrieveContractsbytype2(s) ;
+				   this.getTypeSinistre().equals(tempC.getType());
+				
+				
+			   }
 			
 			
 			

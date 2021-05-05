@@ -41,6 +41,7 @@ public interface IContractService {
 
 	long addOrUpdateContract(Contract contract);
 	List<Contract> retrieveContractsbytype(ContractType type);
+	Contract retrieveContractsbytype2(ContractType type);
 	List<User> retrieveallusers();
 	float CapitalVieUnique(float C, long userid, int duree,double taux);
 	//public List<Contract> sortByDuration();
