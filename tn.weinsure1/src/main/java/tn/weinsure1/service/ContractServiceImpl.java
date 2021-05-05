@@ -502,6 +502,12 @@ public Contract retrieveContractsbytype2(ContractType type) {
 		return ContractRepository.retrieveallusers();
 	}
 
+	@Override
+	public User retrieveUser(Long id) {
+		User u = ContractRepository.retrieveUser(id);
+		return u;
+	}
+
 	/*@Override
 	public List<Contract> sortByDuration() {
 		List<Contract> cnt = ContractRepository.sortByDuration();

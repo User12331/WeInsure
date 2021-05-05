@@ -94,6 +94,9 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
 	@Query("Select u from USER u")
 	public List<User> retrieveallusers();
 	
+	@Query("Select u from USER u where u.id=:id")
+	public User retrieveUser(@Param("id")Long id);
+	
 	/*@Query("select c from Contract c order by c.duration desc")
 	public List<Contract> sortByDuration();*/
 

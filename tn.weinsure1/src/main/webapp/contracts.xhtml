@@ -121,6 +121,14 @@
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
+                                                            <h:outputText value="Provision" />
+                                                        </f:facet>
+                                                        <h:outputText value="#{contract.cost - contract.price}" >
+                                                            <f:convertNumber groupingUsed="true"
+                                                                             maxFractionDigits="2" /></h:outputText>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
                                                             <h:outputText value="Assuré" />
                                                         </f:facet>
                                                         <h:outputText value="#{contract.user.firstName} #{contract.user.lastName}" />
