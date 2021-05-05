@@ -32,13 +32,13 @@ public interface IContractService {
 	void DeleteExpiredContracts();
 	void ApproveContract(long cntid);
 	float TotalCost();
-<<<<<<< HEAD
+
 	public Long findIdContrat(float prime);
 	public Long findIdContratByNom(ContractType s);
 	List<Long> findByIdPerson() ;
 	public List<String> findByIdPerson2();
 	Contract RetrieveContract2(Long id);
-=======
+
 	long addOrUpdateContract(Contract contract);
 	List<Contract> retrieveContractsbytype(ContractType type);
 	List<User> retrieveallusers();
@@ -46,5 +46,5 @@ public interface IContractService {
 	//public List<Contract> sortByDuration();
 
 
->>>>>>> branch 'master' of https://github.com/User12331/WeInsure.git
+
 }

@@ -463,7 +463,7 @@ return contract.getIdcontract();
 	}
 
 	@Override
-<<<<<<< HEAD
+
 	public Long findIdContrat(float prime) {
 		Long id  = ContractRepository.findIdContrat(prime);
 	  return id;
@@ -487,7 +487,7 @@ return contract.getIdcontract();
 	}
 
 	
-=======
+
 	public List<Contract> retrieveContractsbytype(ContractType type) {
 		
 		return ContractRepository.retrieveContractsbytype(type);
@@ -504,5 +504,5 @@ return contract.getIdcontract();
 		return cnt;
 	}*/
 
->>>>>>> branch 'master' of https://github.com/User12331/WeInsure.git
+
 }
