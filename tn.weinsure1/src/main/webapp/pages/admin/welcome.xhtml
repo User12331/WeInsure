@@ -1,25 +1,15 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/template/template.xhtml">
-
-	<ui:param name="page_name" value="Accueil" />
-
-	<ui:define name="content">
-		<!-- BEGIN : TP1 JSF Introduction Login -->
-		<h:panelGroup>
-			<h:form>
-				<h:outputText value="Bonjour #{userController.authenticatedUser.firstName} #{userController.authenticatedUser.lastName} " />
-				<h:commandLink value="Déconnexion" action="#{userController.doLogout()}" />
-			</h:form>
-			
-			<h:form>
-				<a href="/SpringMVC/pages/admin/gererEmployes.jsf">GérerEmployes</a>
-			
-				<a href="/SpringMVC/pages/admin/ajouterContrat.jsf">GérerContrats</a>
-			</h:form>
-		</h:panelGroup>
-
-	</ui:define>
-</ui:composition>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Calendar Example</title>
+</h:head>
+<h:body>
+	<h:panelGrid columns="2" cellpadding="5">
+		<p:outputLabel for="inline" value="Select Date" />
+		<p:calendar id="inline" value="#{calendar.date}" mode="popup" />
+	</h:panelGrid>
+</h:body>
+</html>  

@@ -8,6 +8,8 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 import java.util.Calendar;
@@ -180,30 +182,23 @@ public class ContractServiceImpl implements IContractService {
 	}
 	
 	@Override
-	public float CapitalVieUnique (float C,long userid, int duree){
+	public float CapitalVieUnique (float C,long userid, int duree,double taux){
 		float prime =0;
-		double taux = 0;
-		int x=1;
 		Date date = UserRepository.findById(userid).get().getBirthdate();
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
 		int BDay = calendar.get(Calendar.YEAR);
 		LocalDate now = LocalDate.now();
 		int ageClient = now.getYear()-BDay;
-		if((ageClient > 18) &&( ageClient<=35) )
-		taux = 0.13;
-		else if ((ageClient >35) &&( ageClient<=50) )
-		taux = 0.19;
-		else if ((ageClient >50) &&( ageClient<60) )
-		taux = 0.27;
-		else {L.info("Erreur: Le client n'est pas eligible a ce type de contrat");
+		if (ageClient>60) {FacesMessage facesMessage= new FacesMessage("Erreur: Le client n'est pas eligible a ce type de contrat");
+		FacesContext.getCurrentInstance().addMessage("form:msghere", facesMessage);
 		return 0;
 		}
 		float lxn = tr.findBySurvivantsLx(ageClient+duree);
 		float lx = tr.findBySurvivantsLx(ageClient);
 		double v = Math.pow( 1/ (1+taux) ,duree);
 		prime = (float) (C*(lxn/lx) * v);
-		if (prime > (0.5*UserRepository.findById(userid).get().getSalary()))
+		/*if (prime > (0.5*UserRepository.findById(userid).get().getSalary()))
 				{L.info("Le salaire du client n'est pas suffisant pour ce montant : " + prime +" DT !");
 				return 0;
 				}
@@ -220,46 +215,33 @@ public class ContractServiceImpl implements IContractService {
 		return 0;
 		}
 		c.setRate(taux);
-		c.setPrice((float) (prime*duree));
+		c.setPrice(prime);
 		User user = UserRepository.findById(userid).get();
 		c.setUser(user);
-		Scanner scanner = new Scanner(System.in);
+		/*Scanner scanner = new Scanner(System.in);
 		System.out.print("Do you confirm " + user.getFirstName() +" " + user.getLastName() +" the creation of this " + c.getType()+" contract of " + c + "Dt for a price of : " + prime +"DT for " + duree + " Years and total of " + c.getPrice() +"DT ?\n");
 	   	c.setCost(C);
-		if (scanner.nextInt() == 1 ) 
-	   	{ContractRepository.save(c);	   	
+		ContractRepository.save(c);	 */ 
 	   	return prime;}
-	   	else return 0;
-	}
-	
+			
 	@Override
-	public float PrimeVieUnique(float prime,long userid, int duree){
-		if (prime > (0.5*UserRepository.findById(userid).get().getSalary()))
+	public float PrimeVieUnique(float prime,long userid, int duree,double taux){
+		/*if (prime > (0.5*UserRepository.findById(userid).get().getSalary()))
 		{L.info("Le salaire du client n'est pas suffisant pour ce montant!");
 		return 0;
-		}
+		}*/
 		float C =0;
-		double taux = 0;
 		Date date = UserRepository.findById(userid).get().getBirthdate();
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
 		int BDay = calendar.get(Calendar.YEAR);
 		LocalDate now = LocalDate.now();
 		int ageClient = now.getYear()-BDay;
-		if((ageClient > 18) &&( ageClient<=35) )
-		taux = 0.13;
-		else if ((ageClient >35) &&( ageClient<=50) )
-		taux = 0.19;
-		else if ((ageClient >50) &&( ageClient<60) )
-		taux = 0.27;
-		else {L.info("Erreur: Le client n'est pas eligible aÂ  ce type de contrat");
-		return 0;
-		}
 		float lxn = tr.findBySurvivantsLx(ageClient+duree);
 		float lx = tr.findBySurvivantsLx(ageClient);
 		double v = Math.pow( 1/ (1+taux) ,duree);
 		C = (float) (prime/((lxn/lx) * v));
-		Contract c = new Contract();
+		/*Contract c = new Contract();
 		c.setCreation_date(new Date());
 		c.setDuration(duree);
 		LocalDate exp = (new Date()).toInstant()
@@ -281,19 +263,19 @@ public class ContractServiceImpl implements IContractService {
 	   	if (scanner.nextInt() == 1 ) 
 	   	{ContractRepository.save(c);	
 	   	return C;}
-	   	else return 0;
+	   	else return 0;*/
+		return C;
 	}
 	
 	@Override
-	public double RITP(double prime,long userid){
+	public double RITP(double prime,long userid,double taux){
 		float somme1 = 0,somme2=0;
-		double taux = 0;
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(UserRepository.findById(userid).get().getBirthdate());
 		int BDay = calendar.get(Calendar.YEAR);
 		LocalDate now = LocalDate.now();
 		int ageClient = now.getYear()-BDay;
-		if((ageClient > 18) &&( ageClient<=35) )
+		/*if((ageClient > 18) &&( ageClient<=35) )
 		{taux = 0.13;
 		L.info("Taux ="+taux);
 		}
@@ -305,10 +287,7 @@ public class ContractServiceImpl implements IContractService {
 		{taux = 0.27;
 		L.info("Taux ="+taux);
 		}
-	else {
-		L.info("Erreur: Le client n'est pas eligible a ce type de contrat");
-		return 0;
-	}
+	else {*/
 		for (int i=0;i<60-ageClient-1;i++)
 		{
 			float lxn = tr.findBySurvivantsLx(ageClient+i);
@@ -324,7 +303,7 @@ public class ContractServiceImpl implements IContractService {
 			double v = Math.pow( 1/ (1+taux) ,i);
 			somme2=(float) (somme2+((lxn/lx)*v));
 		}
-		Contract c = new Contract();
+		/*Contract c = new Contract();
 		c.setCreation_date(new Date());
 		c.setDuration(tr.findAgeMax()-ageClient);
 		LocalDate exp = (new Date()).toInstant()
@@ -344,37 +323,33 @@ public class ContractServiceImpl implements IContractService {
 		c.setCost((float) (side1/somme2));
 		System.out.print("Do you confirm " + user.getFirstName() +" " + user.getLastName() +" the creation of this " + c.getType()+" contract for a price of : " + prime +"DT for " + (60-ageClient) + " Years and total of " + c.getPrice() +"DT ?\n Your annuity will be : " + side1/somme2);
 	   	if (scanner.nextInt() == 1 ) 
-	   	{ContractRepository.save(c);	   	
-	   	return side1/somme2;}
-	   	else return 0;
+	   	{ContractRepository.save(c);*/	   	
+	   	return side1/somme2;
+	   //	else return 0;
 		
 	}
 	
 	@Override
-	public double RITC(double capital,long userid){
+	public double RITC(double capital,long userid,double taux){
 		float somme1 = 0,somme2=0;
-		double taux = 0;
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(UserRepository.findById(userid).get().getBirthdate());
 		int BDay = calendar.get(Calendar.YEAR);
 		LocalDate now = LocalDate.now();
 		int ageClient = now.getYear()-BDay;
-		if((ageClient > 18) &&( ageClient<=35) )
+		/*if((ageClient > 18) &&( ageClient<=35) )
 		{taux = 0.13;
-		L.info("Taux ="+taux);
 		}
 	else if ((ageClient >35) &&( ageClient<=50) )
 		{taux = 0.19;
-		L.info("Taux ="+taux);
 		}
 	else if ((ageClient >50) &&( ageClient<60) )
 		{taux = 0.27;
-		L.info("Taux ="+taux);
 		}
 	else {
-		L.info("Erreur: Le client n'est pas eligible a ce type de contrat");
+		FacesMessage facesMessage= new FacesMessage("Erreur: Le client n'est pas eligible a ce type de contrat");
 		return 0;
-	}
+	}*/
 		for (int i=0;i<60-ageClient-1;i++)
 		{
 			float lxn = tr.findBySurvivantsLx(ageClient+i);
@@ -391,7 +366,7 @@ public class ContractServiceImpl implements IContractService {
 			somme2=(float) (somme2+((lxn/lx)*v));
 		}
 		double side2= capital*somme2;
-		Contract c = new Contract();
+		/*Contract c = new Contract();
 		c.setCreation_date(new Date());
 		c.setDuration(tr.findAgeMax()-ageClient);
 		LocalDate exp = (new Date()).toInstant()
@@ -400,7 +375,7 @@ public class ContractServiceImpl implements IContractService {
 		c.setExpiration_date(Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		if (ContractRepository.CountContractsByIdAndType(userid, ContractType.Rente) == 0)
 		c.setType(ContractType.Rente);
-		else {System.out.println("You already have a contract with this type!");
+		else {FacesMessage facesMessage= new FacesMessage("You already have a contract with this type!");
 		return 0;
 		}
 		c.setRate(taux);
@@ -411,9 +386,9 @@ public class ContractServiceImpl implements IContractService {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Do you confirm " + user.getFirstName() +" " + user.getLastName() +" the creation of this " + c.getType()+" contract for a price of : " + side2/somme1 +"DT for " + (60-ageClient) + " Years and total of " + c.getPrice() +"DT ?\n");
 	   	if (scanner.nextInt() == 1 ) 
-	   	{ContractRepository.save(c);	   	
-	   	return side2/somme1;}
-	   	else return 0;
+	   	{ContractRepository.save(c);*/	   	
+	   	return side2/somme1;
+	   	//else return 0;
 		}
 	
 	@Override
@@ -432,7 +407,7 @@ public class ContractServiceImpl implements IContractService {
 		else if ((ageClient >50) &&( ageClient<60) )
 			taux = 0.27;
 		else {
-		L.info("Erreur: Le client n'est pas eligible aÂ  ce type de contrat");
+		L.info("Erreur: Le client n'est pas eligible aÃ‚Â  ce type de contrat");
 		return 0;
 		}
 		for (int i=0;i<60-ageClient-1;i++)
@@ -481,8 +456,14 @@ public class ContractServiceImpl implements IContractService {
 	}
 	
 
+	@Override
+	public long addOrUpdateContract(Contract contract) {
+ContractRepository.save(contract);
+return contract.getIdcontract();
+	}
 
 	@Override
+<<<<<<< HEAD
 	public Long findIdContrat(float prime) {
 		Long id  = ContractRepository.findIdContrat(prime);
 	  return id;
@@ -506,4 +487,22 @@ public class ContractServiceImpl implements IContractService {
 	}
 
 	
+=======
+	public List<Contract> retrieveContractsbytype(ContractType type) {
+		
+		return ContractRepository.retrieveContractsbytype(type);
+	}
+
+	@Override
+	public List<User> retrieveallusers() {
+		return ContractRepository.retrieveallusers();
+	}
+
+	/*@Override
+	public List<Contract> sortByDuration() {
+		List<Contract> cnt = ContractRepository.sortByDuration();
+		return cnt;
+	}*/
+
+>>>>>>> branch 'master' of https://github.com/User12331/WeInsure.git
 }

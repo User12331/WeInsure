@@ -1,4 +1,4 @@
-@import '../vendor/bootstrap/v4/css/bootstrap-grid.css';
+﻿@import '../vendor/bootstrap/v4/css/bootstrap-grid.css';
 @charset "utf-8";
 /*------------------------------------------------------------------
 [Master Stylesheet]
@@ -79,6 +79,60 @@ Input, textarea:	16px 'Signika', sans-serif;
 
 -------------------------------------------------------------------*/
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+.returnbuttons {
+    font-family: tahoma;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    border-radius: 8px;
+    background-color: white;
+    color: mediumpurple;
+    border: 2px solid purple;
+    transition-duration: 0.4s;
+}
+
+    .returnbuttons:hover {
+        background-color: grey;
+        color: purple;
+    }
+
+
+.imgbutton {
+    position: relative;
+    width: 100%;
+}
+
+    /* Make the image responsive */
+    .imgbutton img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Style the button and place it in the middle of the imgbutton/image */
+    .imgbutton .btnimg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        font-size: 16px;
+        padding: 10px 24px;
+        border-radius: 8px;
+        background-color: white ;
+        opacity:0.9;
+        color: mediumpurple;
+        border: 2px solid grey;
+        transition-duration: 0.4s;
+    }
+
+        .imgbutton .btnimg:hover {
+            background-color: purple;
+            color: black;
+        }
+
+
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;

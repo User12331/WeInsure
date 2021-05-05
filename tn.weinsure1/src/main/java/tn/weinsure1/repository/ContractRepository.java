@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
+import tn.weinsure1.entities.User;
 
 @Repository
 public interface ContractRepository extends CrudRepository<Contract,Long> {
@@ -71,6 +72,7 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
 	
 	@Query("Select c from Contract c where c.approved='false'")
 	List<Contract> ShowNotApprovedContracts();
+<<<<<<< HEAD
 	@Query("select c.Price from Contract c where c.user = '2L' ")
 	List<Long> findByIdUser();
 	@Query("select c.idcontract from Contract c where c.Price = ?1 ")
@@ -81,4 +83,15 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
 	@Query("select c.Type from Contract c where c.user = '2L' ")
 	List<String> findByIdPerson2();
 
+=======
+	
+	@Query("Select c from Contract c where c.Type=:type ")
+	public List<Contract> retrieveContractsbytype(@Param("type")ContractType type);
+
+	@Query("Select u from USER u")
+	public List<User> retrieveallusers();
+	
+	/*@Query("select c from Contract c order by c.duration desc")
+	public List<Contract> sortByDuration();*/
+>>>>>>> branch 'master' of https://github.com/User12331/WeInsure.git
 }
