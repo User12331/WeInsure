@@ -63,6 +63,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>rest-api-sdk</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -119,14 +124,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 	
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+		
+		
 			<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
@@ -190,10 +189,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId> <version>6.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId> <artifactId>lombok</artifactId>
-			<version>1.16.16</version>
-		</dependency>
+
 		<dependency>
     		<groupId>io.springfox</groupId>
    			<artifactId>springfox-swagger2</artifactId>
@@ -231,6 +227,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		  <artifactId>twilio</artifactId>
 		  <version>8.5.0</version>
 		</dependency> 
+
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -251,6 +248,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <artifactId>jjwt</artifactId>
             <version>${jjwt.version}</version>
         </dependency>
+        
+        
 
         <!-- For Java 8 Date/Time Support -->
         <dependency>

@@ -71,4 +71,14 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
 	
 	@Query("Select c from Contract c where c.approved='false'")
 	List<Contract> ShowNotApprovedContracts();
+	@Query("select c.Price from Contract c where c.user = '2L' ")
+	List<Long> findByIdUser();
+	@Query("select c.idcontract from Contract c where c.Price = ?1 ")
+	long findIdContrat(float prime);
+	
+	@Query("select c.idcontract from Contract c where c.Type = ?1 ")
+	long findIdContratbyNom(ContractType nom);
+	@Query("select c.Type from Contract c where c.user = '2L' ")
+	List<String> findByIdPerson2();
+
 }

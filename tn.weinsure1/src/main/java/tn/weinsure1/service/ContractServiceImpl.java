@@ -473,7 +473,37 @@ public class ContractServiceImpl implements IContractService {
 	   	ContractRepository.save(c);	   	
 		return (float) (side1/(somme2+((Math.pow( 1/ (1+taux) ,n))*tr.findBySurvivantsLx(ageClient+n))/tr.findBySurvivantsLx(ageClient)));
 	}
+	
+	@Override
+	public List<Long> findByIdPerson() {
+		List<Long> sins  = ContractRepository.findByIdUser();
+	  return sins;
+	}
+	
 
+
+	@Override
+	public Long findIdContrat(float prime) {
+		Long id  = ContractRepository.findIdContrat(prime);
+	  return id;
+	}
+	@Override
+	public Long findIdContratByNom(ContractType s) {
+		Long id  = ContractRepository.findIdContratbyNom(s);
+	  return id;
+	}
+	@Override
+	public List<String> findByIdPerson2() {
+		List<String> sins  = ContractRepository.findByIdPerson2();
+	  return sins;
+	}
+	@Override
+	public Contract RetrieveContract2(Long id) {
+		L.info("in RetrieveContract id = " + id);
+		Contract c = ContractRepository.findById(id).get();
+		L.info("Contract returned = : " + c);
+		return c;	
+	}
 
 	
 }

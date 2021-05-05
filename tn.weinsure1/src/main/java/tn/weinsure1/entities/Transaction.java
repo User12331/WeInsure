@@ -62,6 +62,15 @@ public class Transaction implements Serializable {
 
 
 
+	public Transaction(Date transactionDate, float transactionAmount, TransType transactionType,
+			Contract transactionprice) {
+		super();
+		this.transactionDate = transactionDate;
+		this.transactionAmount = transactionAmount;
+		this.transactionType = transactionType;
+		this.transactionprice = transactionprice;
+	}
+
 	public Transaction(Date transaction_date, float transaction_amount, TransType transaction_type) {
 		super();
 		this.transactionDate = transaction_date;

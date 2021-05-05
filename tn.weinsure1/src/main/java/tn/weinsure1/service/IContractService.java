@@ -33,4 +33,9 @@ public interface IContractService {
 	void DeleteExpiredContracts();
 	void ApproveContract(long cntid);
 	float TotalCost();
+	public Long findIdContrat(float prime);
+	public Long findIdContratByNom(ContractType s);
+	List<Long> findByIdPerson() ;
+	public List<String> findByIdPerson2();
+	Contract RetrieveContract2(Long id);
 }

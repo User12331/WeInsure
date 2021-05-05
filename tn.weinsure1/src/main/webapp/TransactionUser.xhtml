@@ -408,55 +408,62 @@
         
 <div class="row">
        
- <h:panelGroup columns="2">
-                                                <h:form>
-                                                    <table class="table table-data2">
+	<h:panelGroup columns="2">
+										<h:form>
+											<h:dataTable
+												value="#{transacController.getTransactionbyID()}"
+												var="trans" border="1" styleClass="table table-data2">
+												<!--   <h:dataTable value="#{sinController.sinistresPerUser}" var="sinistre" border="1" styleClass="table table-data2">-->
 
-  
-                                                        <tr>
-                                                            <td><h:outputText class="form-control" value="Sinister Type"></h:outputText></td>
-                                                            <td>
-                                                                <h:selectOneMenu value="#{sinController.typeSinistre}" class="form-control">
-                                                                    <f:selectItem itemLabel="Choisir le Type" class="form-control" />
-                                                                    <f:selectItems value="#{sinController.types}" class="form-control" />
-                                                                </h:selectOneMenu>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><h:outputText class="form-control" value="Date de Occurence"></h:outputText></td>
-                                                            <td>
-                                                                <h:inputText  class="form-control" value="#{sinController.dateOccurence}" >
-                                                                    <f:convertDateTime pattern="dd-MM-yyyy" />
-                                                                </h:inputText>
-                                                            </td>
-                                                            
-                                                        </tr>
-                                                       
-                                
-                                                                <tr>
-                                                            <td><h:outputText class="form-control" value="Description"></h:outputText></td>
-                                                            <td>
-                                                             <h:inputTextarea cols="50" rows="5" id="des"
-											value="#{sinController.description}"
-											style="border: 1px solid #0973D2" required="true"
-											requiredMessage=" Required *" />
-                                                                  
-                                                              
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                            <div class="button">
-                                                                <h:commandButton id="btn" value="Ajouter Sinister" action="#{sinController.addSinistre()}"   />
-                                                                <h:message for="btn" />
-                                                                <span STYLE="padding:0 0 0 20px;"></span>
-                                                                   
-                                                            </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </h:form>
-                                            </h:panelGroup>
+
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Prime à Payer" />
+													</f:facet>
+													<h:outputText value="#{trans.transactionAmount}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Type Transaction" />
+													</f:facet>
+													<h:outputText value="#{trans.transactionType}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Date Transaction" />
+													</f:facet>
+													<h:outputText value="#{trans.transactionDate}" />
+												</h:column>
+
+
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Action" />
+													</f:facet>
+													<h:commandButton
+														styleClass="form-group btn btn-sm btn-outline-primary"
+														style="width:100px"
+														action="#{transacController.removeTransaction(trans.transactionid)}"
+														value="Remove"
+														onclick="return confirm('Souhaitez-vous supprimer cette transaction ?')" />
+
+													
+
+													<h:commandButton
+														styleClass="form-group btn btn-sm btn-outline-primary"
+														style="width:100px" value="Paypal"
+														action="#{transacController.payment(trans.transactionid)}" />
+
+
+												</h:column>
+
+
+
+
+
+											</h:dataTable>
+										</h:form>
+									</h:panelGroup>
             </div>
         </div>
    </main>

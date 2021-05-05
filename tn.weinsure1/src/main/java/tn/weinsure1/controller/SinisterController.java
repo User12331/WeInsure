@@ -67,7 +67,7 @@ public class SinisterController {
 	 
 	 public List<sinister> getSinistresPerUser() {
 		 
-		 sinistresPerUser = sinService.findbyuserid(7L);
+		 sinistresPerUser = sinService.findbyuserid(5L);
 			return sinistresPerUser;
 		 
 		 

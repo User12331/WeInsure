@@ -187,5 +187,17 @@ public class TransactionServiceImpl implements ITransactionService {
 
 		return MA;
 	}
+	@Override
+	public int addOrUpdateTransaction(Transaction t) {
+		transactionRepository.save(t);
+	return t.getTransactionid();
+	}
+
+	
+
+	@Override
+	public List<Transaction> getAllTransById(){
+		return (List<Transaction>) transactionRepository.findAllByIdTran();
+	}
 
 }

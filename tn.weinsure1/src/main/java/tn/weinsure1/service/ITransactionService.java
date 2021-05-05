@@ -25,5 +25,7 @@ public interface ITransactionService {
     List<Transaction> listTransactionByDate(int annee);
 
 	Map<Double, Double> StatisticMonthbyAmount(int year);
+	int addOrUpdateTransaction(Transaction t);
+	public List<Transaction> getAllTransById();
 	
 }
