@@ -42,8 +42,18 @@ public interface sinisterRepository  extends CrudRepository<sinister, Long> {
 	Long findcontractidbysisnCASDECES(@Param("idd") Long id2 );
 	@Query("select c.idcontract from Contract c   JOIN c.user u Join u.sinisterList l where l.idSinistre =:idd AND l.typeSinistre ='casDecesperiodique' AND c.Type = 'casDecesperiodique'")
 	Long findcontractidbysisnCASDECESP(@Param("idd") Long id2 );
+	@Query("select c.idcontract from Contract c   JOIN c.user u Join u.sinisterList l where l.idSinistre =:idd ")
+	Long findcontractidbysisn(@Param("idd") Long id2 );
 	@Query("select c from sinister c JOIN c.user u JOIN u.contracts s WHERE s.idcontract IS NOT NULL  ")
     List<sinister> findSinisterWithContracts();
+    @Query("Select count(*) from sinister s WHERE s.typeSinistre = 'VieEntiere'")
+	public int CountSinsVE();
+    @Query("Select count(*) from sinister s WHERE s.typeSinistre = 'casDeces'")
+	public int CountSinsCD();
+    @Query("Select count(*) from sinister s WHERE s.typeSinistre = 'TemporairedecesEmprunteur'")
+	public int CountSinsTDE();
+
+
 
 
 	

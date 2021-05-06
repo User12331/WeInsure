@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -156,8 +157,8 @@ public class sinisterServiceImpl implements IsinisterService {
 			String nom = sinstreRej.get(i).getUser().getFirstName();
 			String motif =sinstreRej.get(i).getMotifStatus().toString();
 			String date =sinstreRej.get(i).getDateOccurence().toString();			
-			sendEmailService.sendEmail("yahiabourguiba1997@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur " + nom +", on vous informe que votre demande de remboursement"
-					+ "de sinistre, envoyée à la date "+date+ " , a été rejetée car cette demande " + motif + ". Merci pour votre compréhension. ", file);	
+		//	sendEmailService.sendEmail("yahiabourguiba1997@gmail.com", "Sinistre reglementé" , "Cher cleint monsieur " + nom +", on vous informe que votre Sinistre"
+		//			+ "envoyée à la date "+date+ " , a été rejetée car cette demande " + motif + ". Merci pour votre compréhension. ", file);	
 		} 
 		} 
 		catch (Exception e)
@@ -224,7 +225,7 @@ public class sinisterServiceImpl implements IsinisterService {
 
 	}	
 	@Override
-	public float CVE(Long idS){
+	public float CVE(Long idS) {
 		int k;
 		float prime = 0 ; 
 		float cd = 0  ;
@@ -232,6 +233,10 @@ public class sinisterServiceImpl implements IsinisterService {
 		//CurrentUser.getId();
 		sinister ss = sinistreRepository.findById(idS).get();
 		m = this.findcontractidbysisnVIEENTIERE(idS);
+		if(m==null){
+			L.info("Vous Avez Un probleme de Contract Veuillez Nous joindre chez la plus proche agence" ) ;
+			return 0;
+		}
 		L.info("ID CONTRAT"+m ) ;
 		User u =ss.getUser();
 		Contract c = cr.findById((long) m).get();
@@ -242,35 +247,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		LocalDate now = LocalDate.now();
 		int years = now.getYear()-BDay;
 		double taux = c.getRate();
-/*
-		if (ss.getUser().getContracts() == null)
-		{
-			L.info("Vous Avez Un probleme de Contract Veuillez Nous joindre chez la plus proche agence" ) ;
-			return 0;
-			
-		}
-		 if (ss.getTypeSinistre().toString().equals(c.getType().toString()) == false)
-		{
-			L.info("Vous Avez Un probleme de Contract Veuillez Nous joindre chez la plus proche agence" ) ;
-			return 0;
-			
-		}
-		if (ss.getStatus().equals(sinisterstatus.rejected) )
-		{
-			L.info("Vous devez regler votre situation avec la plus proche agence" ) ;
-			return 0 ;
-		}
-		 if ( ss.getStatus().equals(sinisterstatus.enAttente))
-		{
-			L.info("Veuillez patienter , Un de nos agent est entrain de regler votre situation" ) ;
-			return 0 ;
-		}
-		 if (ss.getTypeSinistre().compareTo(typeSinister.VieEntiere) != 0)
-		{
-			L.info("Veuillez verifier votre Type de Sinistre" ) ;
-			return 0 ;
-		}
-		*/
+
 		for (k =0; k < AgeMax - years; k++) {
 			float dxk= tr.findByDecesDx(years+k); 	
 			L.info("DX " + dxk) ;
@@ -285,6 +262,11 @@ public class sinisterServiceImpl implements IsinisterService {
 		ss.setMotifStatus(SinisterMotif.Réglé);
 		ss.setStatus(sinisterstatus.valide);
 		sinistreRepository.save(ss);
+		try {
+			sendEmailService.sendEmail( u.getEmail() ,  "Sinistre Reglementé",cd , ss.getMotifStatus().toString(),u.getFirstName(),ss.getDateOccurence().toString(), file);
+		} catch (Exception e) {
+			System.out.println("");
+		}	
 		L.info("reg " + ss.getReglemntation()) ;
 		L.info("PRIME+++++++++ =" + cd) ;
 		L.info("prix cotnract+++++++++ =" + c.getPrice()) ;
@@ -353,8 +335,14 @@ public class sinisterServiceImpl implements IsinisterService {
 			}
 		    cd = c.getPrice() / prime ; 
 		    ss.setReglemntation(cd);
+		    ss.setMotifStatus(SinisterMotif.Réglé);
 			ss.setStatus(sinisterstatus.valide);
 			sinistreRepository.save(ss);
+			try {
+				sendEmailService.sendEmail( u.getEmail() ,  "Sinistre Reglementé",cd , ss.getMotifStatus().toString(),u.getFirstName(),ss.getDateOccurence().toString(), file);
+			} catch (Exception e) {
+				System.out.println("");
+			}	
 			L.info("reg " + ss.getReglemntation()) ;
 		L.info("PRIME+++++++++ =" + cd) ;
 		return cd;
@@ -429,11 +417,16 @@ public class sinisterServiceImpl implements IsinisterService {
 		ss.setMotifStatus(SinisterMotif.Réglé);
 		ss.setStatus(sinisterstatus.valide);
 		sinistreRepository.save(ss);
+		try {
+			sendEmailService.sendEmail( u.getEmail() ,  "Sinistre Reglementé",cd , ss.getMotifStatus().toString(),u.getFirstName(),ss.getDateOccurence().toString(), file);
+		} catch (Exception e) {
+			System.out.println("");
+		}
 		L.info("reg " + ss.getReglemntation()) ;
 
 		return cd;
 	}   
-    public float TDEMPRUNTEUR(Long idS   ) {
+    public float TDEMPRUNTEUR(Long idS) {
 		int k;
 		float prime = 0;
 		int s = 0;
@@ -459,23 +452,6 @@ public class sinisterServiceImpl implements IsinisterService {
 			 L.info("SSSS"+s ) ;
 			
 		}
-		/*
-		 if ( ss.getStatus().equals(sinisterstatus.rejected) )
-		{
-			L.info("Vous devez regler votre situation avec la plus proche agence" ) ;
-			return 0 ;
-		}
-		 if ( ss.getStatus().equals(sinisterstatus.enAttente))
-		{
-			L.info("Veuillez patienter , Un de nos agent est entrain de regler votre situation" ) ;
-			return 0 ;
-		}
-		 if (ss.getTypeSinistre().compareTo(typeSinister.TemporairedecesEmprunteur) != 0)
-		{
-			L.info("Veuillez verifier votre Type de Sinistre" ) ;
-			return 0 ;
-		}
-		*/
 		for (k =0; k < ((s-1)*12) ; k++) {
 			 //double v = Math.pow((1+(taux/12)) ,  s*12 );
 			//double l = Math.pow( 1/ (1+(taux/12)) ,  s*12 - 1 );
@@ -489,8 +465,14 @@ public class sinisterServiceImpl implements IsinisterService {
 									      }
 		tde = tde /12 ; 
 		ss.setReglemntation(tde);
+		ss.setMotifStatus(SinisterMotif.Réglé);
 		ss.setStatus(sinisterstatus.valide);
 		sinistreRepository.save(ss);
+		try {
+			sendEmailService.sendEmail( u.getEmail() ,  "Sinistre Reglementé",tde , ss.getMotifStatus().toString(),u.getFirstName(),ss.getDateOccurence().toString(), file);
+		} catch (Exception e) {
+			System.out.println("");
+		}	
 		L.info("reg " + ss.getReglemntation()) ;
 		L.info("PRIME+++++++++ =" + tde) ;
 		return tde;
@@ -644,8 +626,25 @@ public class sinisterServiceImpl implements IsinisterService {
 		return k ;
 			
 		}
-	
-	
+	public Long findcontractidbysisn(Long id2 ) {
+
+		Long k =0L;
+		k = sinistreRepository.findcontractidbysisnCASDECESP(id2);
+		return k ;
+			
+		}
+	@Override
+	public int countVE(){
+		return sinistreRepository.CountSinsVE();
+	}
+	@Override
+	public int countCD(){
+		return sinistreRepository.CountSinsCD();
+	}
+	@Override
+	public int countTDE(){
+		return sinistreRepository.CountSinsTDE();
+	}
 	
 	
 	

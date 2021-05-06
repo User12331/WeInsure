@@ -3,6 +3,8 @@ package tn.weinsure1.service;
 import java.text.ParseException; 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +31,7 @@ public interface IsinisterService {
 	 List<sinister> findSinisterByStatusRejected()  ;
 	 List<sinister> findSinisterByStatusEnAttente()  ;
 	 void CheckStatus() ; 
-	 float CVE(Long idS ) ; 
+	 float CVE(Long idS ) ;
 	 void SendMail() ;
 	 List<sinister> findbyuserid(Long id);
 	 int findcontractdurationBysinister(Long id , ContractType str);
@@ -51,6 +53,11 @@ public interface IsinisterService {
  	public	Long findcontractidbysisnTDEMPREUNTEUR( Long id2 );
  	public	Long findcontractidbysisnCASDECES( Long id2 );
  	public	Long findcontractidbysisnCASDECESP( Long id2 );
+ 	public	Long findcontractidbysisn( Long id2 );
+ 	public int countVE();
+ 	public int countCD();
+ 	public int countTDE();
+ 	 
  
 	 
 

@@ -56,7 +56,7 @@
 <ul class="sh-header__menu">
                     
 <li>
-                        <a href="/TransactionUser.jsf">Transactions</a>
+                        <a href="/InterFaceSinister.jsf">Sinisters</a>
                         
 
                     </li>
@@ -210,7 +210,7 @@
 
 
 									<td colspan="2">
-									<h:commandButton id="btn1"
+									<h:commandButton 
 											value="Ajouter Transaction"
 											styleClass="form-group btn btn-sm btn-outline-dark"
 											action="#{transacController.addTransaction(transacController.getIDContrat(transacController.transactionAmount))}" />
@@ -218,7 +218,7 @@
 											for="btn2" />
 											
 											 <h:button
-											styleClass="form-group btn btn-sm btn-outline-dark" id="btn"
+											styleClass="form-group btn btn-sm btn-outline-dark" 
 											value="Retour" outcome="FirstClient" /><span
 										STYLE="padding: 0 0 0 20px;"></span> <!-- action = "/temm?faces-redirect=true"   -->
 										<h:message for="btn3" /></td> </tr> 

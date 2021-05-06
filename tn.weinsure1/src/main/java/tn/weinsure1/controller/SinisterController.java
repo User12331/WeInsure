@@ -31,6 +31,7 @@ import tn.weinsure1.entities.User;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.entities.typeSinister;
+import tn.weinsure1.repository.UserRepository;
 import tn.weinsure1.repository.sinisterRepository;
 import tn.weinsure1.service.IContractService;
 import tn.weinsure1.service.ITableMortaliteService;
@@ -50,6 +51,8 @@ public class SinisterController {
 	sinisterRepository sr ; 
 	@Autowired
 	IContractService cs;
+	@Autowired
+	UserRepository us;
 
 	
 	private Long idSinistre ;
@@ -66,8 +69,16 @@ public class SinisterController {
 	private Contract tempC ;
 	private ContractType m ; 
 	
+	private UploadedFile  vv;
 	
-	 public ContractType getM() {
+	
+	public UploadedFile getVv() {
+		return vv;
+	}
+	public void setVv(UploadedFile vv) {
+		this.vv = vv;
+	}
+	public ContractType getM() {
 		return m;
 	}
 	public void setM(ContractType m) {
@@ -199,7 +210,7 @@ public class SinisterController {
 		
 		
 		
-		public String  addSinistreVE() {
+		public String  addSinistreVE() throws IOException {
 			Calendar currentdate = Calendar.getInstance(); 
 			Date d = currentdate.getTime();  
 			
@@ -212,10 +223,11 @@ public class SinisterController {
 			if( dateOccurence.compareTo(d1) <0 ){
 				FacesMessage facesMessage= new FacesMessage("Date Invalid: "
 				    	+ "Please check occurence Date");
-			FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+			FacesContext.getCurrentInstance().addMessage("hihi:awah", facesMessage);
 			}
+	
 			else {
-				sinService.addOrUpdateSinistre(new sinister(typeSinistre.VieEntiere, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.VieEntiere, description, dateOccurence, sinisterstatus.enAttente, vv.getContents(),us.getOne(7L)));
 				navigateTo = "/affichagedetail?faces-redirect=true" ;
 				}
 			return navigateTo; 
@@ -233,7 +245,7 @@ public class SinisterController {
 			if( dateOccurence.compareTo(d1) <0 ){
 				FacesMessage facesMessage= new FacesMessage("Date Invalid: "
 				    	+ "Please check occurence Date");
-			FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+			FacesContext.getCurrentInstance().addMessage("hihi:awah", facesMessage);
 			}
 			else {
 				
@@ -313,6 +325,7 @@ public class SinisterController {
 		this.setStatus(empl.getStatus());
 		this.setDocuments(empl.getDocuments());
 		this.setPerson(empl.getUser());
+		this.setMotifStatus(empl.getMotifStatus());
 		this.setSinistreIdToBeUpdated(empl.getIdSinistre());
 		return "/sinisterAdminDetails?faces-redirect=ture";
 		}
@@ -329,6 +342,7 @@ public class SinisterController {
 		public void setUser(User user) {
 			this.user = user;
 		}
+		
 			//CHECK STATUS
 			public void updateStatus()
 		{
@@ -344,8 +358,14 @@ public class SinisterController {
 		
 			public String CalculCVE(Long ids)
 			{ 
+				
 				    double val1= 0;
 				    val1 = sinService.CVE(ids);
+				    if(val1==0){
+				    	FacesMessage facesMessage= new FacesMessage("Vous Devez "
+						    	+ "Verifiez votre Contrat");
+					FacesContext.getCurrentInstance().addMessage("hihiho:hahahi", facesMessage);
+				    }
 				    return ""+ val1 + "" ;
 			}
 
@@ -397,6 +417,26 @@ public class SinisterController {
 				
 				
 			   }
+			   public String Simulator(Long ids )
+				{
+
+				    double k=0;
+				    Long d = 0L;
+				    d=sr.findcontractidbysisn(ids);
+				    
+					k=sinService.CreditSimulator(ids,d );
+					FacesMessage facesMessage = new FacesMessage(" Le coût éstimé de l’assurance bancaire = "+ k);
+
+					FacesContext.getCurrentInstance().addMessage("haha:awawa",facesMessage);
+					
+					return ""+ k + "" ;
+				}
+			   public int cal(){
+				return  sinService.countVE() ;	}
+			   public int cal2(){
+					return  sinService.countCD() ;	}
+			   public int caL3(){
+					return   sinService.countTDE() ;	}
 			
 			
 			

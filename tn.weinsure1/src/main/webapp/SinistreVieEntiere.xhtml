@@ -178,7 +178,7 @@
 <div class="row">
        
  <h:panelGroup columns="2">
-                                                <h:form>
+                                                <h:form id="hihi">
                                                     <table class="table table-data2">
 
   
@@ -191,8 +191,9 @@
                                                         <tr>
                                                             <td><h:outputText class="form-control" value="Date de Occurence"></h:outputText></td>
                                                             <td>
-                                                                <h:inputText  class="form-control" value="#{sinController.dateOccurence}" >
+                                                                <h:inputText  class="form-control" value="#{sinController.dateOccurence}"  >
                                                                     <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                                    <h:message for="awah"></h:message>
                                                                 </h:inputText>
                                                             </td>
                                                             
@@ -210,24 +211,19 @@
                                                               
                                                             </td>
                                                         </tr>
-                                                                        <tr>
+                                                          <tr>
                                                             <td><h:outputText class="form-control" value="Document"></h:outputText></td>
                                                             <td>
-                                                             <h:inputFile  id="file-id"  
-	    	   			       value="#{sinController.documents}" 
-	    	   			       required="true"   
-                               requiredMessage="Please upload a file" 
-                               alt="upload file"
-                               style="font-size: 30px;">
-                         </h:inputFile>  
+                                                             <p:fileUpload value="#{sinController.vv}" mode="simple" skinSimple="true"/>
                                                                   
                                                               
                                                             </td>
                                                         </tr>
+                                                                   
                                                         <tr>
                                                             <td colspan="2">
                                                             <div  class="button">
-                                                                <h:commandButton styleClass="form-group btn btn-sm btn-outline-primary" style="width:100px" value="Ajouter Sinister" action="#{sinController.addSinistreVE()}"    />
+                                                                <h:commandButton id="awah" styleClass="form-group btn btn-sm btn-outline-primary" style="width:100px" value="Ajouter Sinister" action="#{sinController.addSinistreVE()}"    />
                                                                 <h:message for="btn" />
                                                                 <span STYLE="padding:0 0 0 20px;"></span>
                                                                    

@@ -164,15 +164,15 @@ public class ContractServiceImpl implements IContractService {
 	public void ApproveContract(long cntid){
 		Contract c = ContractRepository.findById(cntid).get();
 		User u= ContractRepository.findById(cntid).get().getUser();
-		try {
-			sendEmailService.sendEmail(u.getEmail(), "Contract approved", "Dear Client "+u.getFirstName() +" "+u.getLastName()+"\n Your Contract, of type "+c.getType()+" has been approved for a total price of "
+		/*try {
+			.sendEmail(u.getEmail(), "Contract approved", "Dear Client "+u.getFirstName() +" "+u.getLastName()+"\n Your Contract, of type "+c.getType()+" has been approved for a total price of "
 			+ c.getPrice()+" and a maximum of "+c.getCost()+"Dt as cost for the insurance.\n The duration of the contract is "+c.getDuration()+" Years, strating from now "+ c.getCreation_date() + " to "+c.getExpiration_date()+"\n For any information please contact us or"
 			+ " leave us a contraint.\nWeInsure MicroInsurance for everyone", file);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
 		c.setApproved(true);
-		ContractRepository.save(c);
+		ContractRepository.save(c);*/
 	}
 	
 	@Override

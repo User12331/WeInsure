@@ -219,7 +219,7 @@ public class TransactionControlImpl {
 			
 			 
 			
-			navigateTo = "/FirstClient.xhtml?faces-redirect=true" ;
+			navigateTo = "/TransactionUser.xhtml?faces-redirect=true" ;
 			//}
 		return navigateTo; 
 	}

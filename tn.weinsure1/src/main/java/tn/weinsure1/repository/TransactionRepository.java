@@ -12,6 +12,6 @@ import tn.weinsure1.entities.Transaction;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 
-	@Query("select c from Transaction c where c.transactionprice = '2L'  ")
+	@Query("select c from Transaction c where c.transactionprice = '3L'  ")
     List<Transaction> findAllByIdTran();
 }
