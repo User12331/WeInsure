@@ -91,8 +91,16 @@ public class SinisterController {
 	 
 	 private List<sinister> sinistres;
 	 private List<sinister> sinistresPerUser;
+	 private List<sinister> FiltredSins;
 	 
-	 public List<sinister> getSinistresPerUser() {
+	 public List<sinister> getFiltredSins(String sins) {
+		 FiltredSins = sinService.findByDescriptionn(sins);
+		 return FiltredSins;
+	}
+	public void setFiltredSins(List<sinister> filtredSins) {
+		FiltredSins = filtredSins;
+	}
+	public List<sinister> getSinistresPerUser() {
 		 
 		 sinistresPerUser = sinService.findbyuserid(5L);
 			return sinistresPerUser;

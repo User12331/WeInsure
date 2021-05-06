@@ -30,6 +30,7 @@ public interface IsinisterService {
 	 List<sinister> findByAny(String any);
 	 List<sinister> findSinisterByStatusRejected()  ;
 	 List<sinister> findSinisterByStatusEnAttente()  ;
+	 List<sinister> findByDescriptionn(String sins);
 	 void CheckStatus() ; 
 	 float CVE(Long idS ) ;
 	 void SendMail() ;

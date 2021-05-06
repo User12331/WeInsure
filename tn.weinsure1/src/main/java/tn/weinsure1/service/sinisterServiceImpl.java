@@ -116,6 +116,11 @@ public class sinisterServiceImpl implements IsinisterService {
 		return sinistreRepository.findSinisterByStatus(sins);
 		
 	}
+	@Override 
+	public List<sinister> findByDescriptionn(String sins) {
+		return sinistreRepository.findSinisterByStatuss(sins);
+		
+	}
 	@Override
 	public List<sinister> findByDescription(String name) {
 

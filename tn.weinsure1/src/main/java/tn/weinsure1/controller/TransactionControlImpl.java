@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +22,7 @@ import tn.weinsure1.entities.Smsrequest;
 import tn.weinsure1.entities.TransType;
 import tn.weinsure1.entities.Transaction;
 import tn.weinsure1.entities.User;
+import tn.weinsure1.entities.VerifyRecaptcha;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.typeSinister;
 import tn.weinsure1.service.IContractService;
@@ -238,6 +242,13 @@ public class TransactionControlImpl {
 		else {*/
 		//houni ndakhel ic contrat mtaa transaction (nrecuperih mel sinistre -> person-- > contrat w baad nekhou donnée mel contrat
 		//type contrat + prime + date+
+
+
+try {
+		        String gRecaptchaResponse = FacesContext.getCurrentInstance().
+		        getExternalContext().getRequestParameterMap().get("g-recaptcha-response");
+		        boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+		        if(verify){
 		
 		Contract c=  contract.RetrieveContract2(idC);
 		
@@ -251,7 +262,20 @@ public class TransactionControlImpl {
 			navigateTo = "/TransactionUser.xhtml?faces-redirect=true" ;
 			//}
 		return navigateTo; 
-	}
+		        }
+		        else{
+		            FacesContext context = FacesContext.getCurrentInstance();
+		             context.addMessage( "forma:btn2", new FacesMessage( "Select Captcha") );
+		             return null;
+		         
+		             
+		          }
+		         } catch (Exception e) {
+		             System.out.println(e);
+		         }
+		        return null;
+		     }
+	
 	//date tawa
 	public Date convertToDateViaSqlTimestamp(LocalDateTime dateToConvert) {
 		return java.sql.Timestamp.valueOf(dateToConvert);
