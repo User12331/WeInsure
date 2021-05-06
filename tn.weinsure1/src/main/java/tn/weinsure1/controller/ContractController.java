@@ -35,7 +35,9 @@ public class ContractController {
 	IsinisterService is;
 	ITableMortaliteService tr;
 	
+	
 	private List<Contract> contracts,rentecontracts,viecontracts;
+	private List<Contract> ucontracts;
 	private boolean approved;
 	private User user;
 	private String fname,lname;
@@ -88,11 +90,12 @@ public class ContractController {
 				}
 		return navigateTo;	
 	}
-
-	public String addVieContract(){
+	
+	public String addVieContractu(){
 		Date cr_date= new Date();
 		userid=1L;
 		LocalDate exp;
+		rate=0.05;
 		String navigateTo="/ucontracts?faces-redirect=true";
 		if (cre_date==null)
 		{
@@ -103,6 +106,10 @@ public class ContractController {
 		else {exp = cre_date.toInstant()
 			      .atZone(ZoneId.systemDefault())
 			      .toLocalDate().plusYears(duration);}
+		if (ic.CountContractsByIdAndType(userid, ContractType.Vie)>0)
+		{FacesMessage facesMessage2= new FacesMessage("Vous avez deja un contrat vie");
+		FacesContext.getCurrentInstance().addMessage("addcntform:pricecost", facesMessage2);
+		return navigateTo="null";}
 		if (price!=0 && cost !=0)
 		{
 			FacesMessage facesMessage= new FacesMessage("Merci de saisir seulement le capital ou bien la prime !");
@@ -110,26 +117,27 @@ public class ContractController {
 			navigateTo="null";
 		}
 		else if (cost==0)
-				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Vie,rate,ic.PrimeVieUnique(price, userid, duration,rate)));
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Vie,rate,ic.PrimeVieUnique(price, userid, duration,rate),ic.retrieveUser(userid)));
 		else if (price ==0)
-				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,ic.CapitalVieUnique(cost, userid, duration, rate),ContractType.Vie,rate,cost));
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,ic.CapitalVieUnique(cost, userid, duration, rate),ContractType.Vie,rate,cost,ic.retrieveUser(userid)));
 		return navigateTo;	
 	}
-	
-	public String addRenteContract(){
+		
+	public String addRenteContractu(){
 		Date cr_date= new Date();
 		LocalDate exp;
+		rate=0.065;
 		userid=1L;
 		String navigateTo="/ucontracts?faces-redirect=true";
 		if (cre_date==null)
 		{
 		cre_date = cr_date;
 		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(iu.RetrieveUser(Long.toString(userid)).getBirthdate());
+		calendar.setTime(ic.retrieveUser(userid).getBirthdate());
 		int BDay = calendar.get(Calendar.YEAR);
 		LocalDate now = LocalDate.now();
-		int ageClient = now.getYear()-BDay;
-		duration=tr.findAgeMax()-ageClient;
+		int ageClient = 40;
+		duration=80;
 		exp = cr_date.toInstant()
 			      .atZone(ZoneId.systemDefault())
 			      .toLocalDate().plusYears(duration);}
@@ -143,10 +151,13 @@ public class ContractController {
 			navigateTo="null";
 		}
 		else if (cost==0)
-				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Rente,rate,(float) ic.RITP(price, userid,rate)));
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,price,ContractType.Rente,rate,(float) ic.RITP(price, userid,rate),ic.retrieveUser(userid)));
 		else if (price ==0)
-				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,(float) ic.RITC(cost, userid,rate),ContractType.Rente,rate,cost));
-				
+				ic.addOrUpdateContract(new Contract(cre_date,Date.from(exp.atStartOfDay(ZoneId.systemDefault()).toInstant()),duration,(float) ic.RITC(cost, userid,rate),ContractType.Rente,rate,cost,ic.retrieveUser(userid)));
+		if (ic.CountContractsByIdAndType(userid, ContractType.Rente)>0)
+			{FacesMessage facesMessage2= new FacesMessage("Vous avez deja un contrat de rente");
+			FacesContext.getCurrentInstance().addMessage("addcntform:pricecost", facesMessage2);
+			navigateTo="null";}
 		return navigateTo;}
 	
 	public String updateContract(){
@@ -195,6 +206,11 @@ public class ContractController {
 		this.contracts = contracts;
 	}
 
+	public List<Contract> getUContracts(){
+	ucontracts=ic.RetrieveContractsByUserId(1);
+	return ucontracts;
+	}
+		
 	public List<User> getUsers(){
 		return (ic.retrieveallusers());
 	}

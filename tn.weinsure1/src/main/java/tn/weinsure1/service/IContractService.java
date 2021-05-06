@@ -2,6 +2,9 @@ package tn.weinsure1.service;
 
 
 import java.util.List;
+
+import org.springframework.data.repository.query.Param;
+
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
 import tn.weinsure1.entities.User;
@@ -32,7 +35,7 @@ public interface IContractService {
 	void DeleteExpiredContracts();
 	void ApproveContract(long cntid);
 	float TotalCost();
-
+	public User retrieveUser(Long id);
 	public Long findIdContrat(float prime);
 	public Long findIdContratByNom(ContractType s);
 	List<Long> findByIdPerson() ;

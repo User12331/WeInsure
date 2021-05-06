@@ -82,6 +82,18 @@ public class Contract implements Serializable {
 	}
 	
 	public Contract(Date creation_date, Date expiration_date, int duration, float price,
+			ContractType type, double rate, float cost,User user) {
+		this.Creation_date = creation_date;
+		this.Expiration_date = expiration_date;
+		this.Duration = duration;
+		this.Price = price;
+		this.Type = type;
+		this.rate = rate;
+		this.cost = cost;
+		this.user = user;
+	}
+	
+	public Contract(Date creation_date, Date expiration_date, int duration, float price,
 			ContractType type, double rate, boolean approved, float cost,User user) {
 		this.Creation_date = creation_date;
 		this.Expiration_date = expiration_date;
