@@ -14,4 +14,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 
 	@Query("select c from Transaction c where c.transactionprice = '3L'  ")
     List<Transaction> findAllByIdTran();
+
 }

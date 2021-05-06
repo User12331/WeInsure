@@ -201,7 +201,7 @@ public class Contract implements Serializable {
 	 private User user;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="transactionprice")
+	@OneToMany( mappedBy="transactionprice")
 	private List<Transaction> transactionCredit;
 	 
 

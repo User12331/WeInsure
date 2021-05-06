@@ -1,6 +1,6 @@
 package tn.weinsure1.controller;
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime; 
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +15,12 @@ import com.paypal.base.rest.PayPalRESTException;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
+import tn.weinsure1.entities.Smsrequest;
 import tn.weinsure1.entities.TransType;
 import tn.weinsure1.entities.Transaction;
+import tn.weinsure1.entities.User;
+import tn.weinsure1.entities.sinister;
+import tn.weinsure1.entities.typeSinister;
 import tn.weinsure1.service.IContractService;
 import tn.weinsure1.service.ITransactionService;
 import tn.weinsure1.service.PaypalService;
@@ -46,18 +50,31 @@ public class TransactionControlImpl {
 
 	private float transactionAmount;
 	
-	private String transactionType;
+	private TransType transactionType;
 	
     private Contract transactionprice;
+
+    private List<Transaction> tranSs;
     
-    //contart
+    public List<Transaction> getTranSs() {
+    	tranSs =transacService.listAll();
+		return tranSs;
+	}
+
+
+
+	public void setTranSs(List<Transaction> tranSs) {
+		this.tranSs = tranSs;
+	}
+
+
+
+
+	//contart
     private Float premiumContract;
     private String NomContract;
 	private long idContract;
-    
 
-    
-    
 	public String getNomContract() {
 		return NomContract;
 	}
@@ -114,15 +131,16 @@ public class TransactionControlImpl {
 		this.transactionAmount = transactionAmount;
 	}
 
-	public String getTransactionType() {
+	public TransType getTransactionType() {
 		return transactionType;
 	}
 
-	public void setTransactionType(String transactionType) {
+	public void setTransactionType(TransType transactionType) {
 		this.transactionType = transactionType;
 	}
 
 	public Contract getTransactionprice() {
+	
 		return transactionprice;
 	}
 
@@ -134,10 +152,19 @@ public class TransactionControlImpl {
 	
 	 private List<Contract> contracts; 
 	 private List<Transaction> transBYID; 
+	 private List<Transaction> TransALl; 
+	 public TransType[] getTypess() { return TransType.values(); }
 	 
 	 
 	 
-	 
+	public List<Transaction> getTransALl() {
+		return TransALl;
+	}
+
+	public void setTransALl(List<Transaction> transALl) {
+		TransALl = transALl;
+	}
+
 	public List<Transaction> getTransBYID() {
 		return transBYID;
 	}
@@ -215,7 +242,9 @@ public class TransactionControlImpl {
 		Contract c=  contract.RetrieveContract2(idC);
 		
 		String navigateTo = "null"; 
-			transacService.addOrUpdateTransaction(new Transaction(convertToDateViaSqlTimestamp(LocalDateTime.now()), c.getPrice(), TransType.debit,c));
+		//Smsrequest smsrequest = new Smsrequest("+216 97 841 301","+21697841301");
+		//String status=smsservice.sendsms(smsrequest);
+			transacService.addOrUpdateTransaction(new Transaction(convertToDateViaSqlTimestamp(LocalDateTime.now()), c.getPrice(),transactionType,c));
 			
 			 
 			
@@ -231,6 +260,10 @@ public class TransactionControlImpl {
 
 	public List<Transaction> getTransactionbyID() {
 		transBYID = transacService.getAllTransById();
+		return transBYID;
+		}
+	public List<Transaction> getTransactionAll() {
+		TransALl = transacService.retrieveAllTransactions();
 		return transBYID;
 		}
 	/////////////////////////////////////////PAYPAL
@@ -262,10 +295,20 @@ return "" ;
 	
 	//delete
 
-	public void removeTransaction(int tId)
+	public String removeTransaction(int tId)
 	{
-
 		transacService.deleteTransaction(tId);
+		return "/newAdminT?faces-redirect=ture";
+	}
+	public String displayTransaction(Transaction empl)
+	{
+		
+	this.setTransactionType(empl.getTransactionType());	
+	this.setTransactionDate(empl.getTransactionDate());
+	this.setTransactionAmount(empl.getTransactionAmount());
+	this.setTransactionprice(empl.getTransactionprice());
+	return "/TransAdminDetails?faces-redirect=ture";
+	
 	}
 	
 }

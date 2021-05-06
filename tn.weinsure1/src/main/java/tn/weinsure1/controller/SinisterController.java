@@ -68,16 +68,7 @@ public class SinisterController {
 	private SinisterMotif motifStatus;
 	private Contract tempC ;
 	private ContractType m ; 
-	
-	private UploadedFile  vv;
-	
-	
-	public UploadedFile getVv() {
-		return vv;
-	}
-	public void setVv(UploadedFile vv) {
-		this.vv = vv;
-	}
+
 	public ContractType getM() {
 		return m;
 	}
@@ -227,7 +218,7 @@ public class SinisterController {
 			}
 	
 			else {
-				sinService.addOrUpdateSinistre(new sinister(typeSinistre.VieEntiere, description, dateOccurence, sinisterstatus.enAttente, vv.getContents(),us.getOne(7L)));
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.VieEntiere, description, dateOccurence, sinisterstatus.enAttente,documents,us.getOne(5L)));
 				navigateTo = "/affichagedetail?faces-redirect=true" ;
 				}
 			return navigateTo; 
@@ -301,8 +292,14 @@ public class SinisterController {
 		public String removeSinistre(Long id)
 		{
 			sinService.deleteSinistre(id);
+			return "/affichagedetail?faces-redirect=ture";
+		}
+		public String removeSinistre2(Long id)
+		{
+			sinService.deleteSinistre(id);
 			return "/newAdmin?faces-redirect=ture";
 		}
+		
 		
 		// UPDATE
 		private long sinistreIdToBeUpdated; // Ajouter getter et setter
@@ -427,7 +424,7 @@ public class SinisterController {
 					k=sinService.CreditSimulator(ids,d );
 					FacesMessage facesMessage = new FacesMessage(" Le coût éstimé de l’assurance bancaire = "+ k);
 
-					FacesContext.getCurrentInstance().addMessage("haha:awawa",facesMessage);
+					FacesContext.getCurrentInstance().addMessage("null:wawawa",facesMessage);
 					
 					return ""+ k + "" ;
 				}

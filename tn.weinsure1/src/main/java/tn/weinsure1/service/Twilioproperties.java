@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("twilio")
 public class Twilioproperties {
- 	private String accountSid = "AC6b77f975bd8d990436ea4376ab5ad941";
-	private String authToken = "ac106c6ebfcef1039aab24da6d7d593d";
-	private String fromNumber = "+13109974584";
+ 	private String accountSid = "AC6018796f14b403db0a9e1c1cfbdc2571";
+	private String authToken = "33740e0ca3992bf9f36a13486e09e007";
+	private String fromNumber = "+14159415605";
 	public String getAccountSid() {
 		return accountSid;
 	}

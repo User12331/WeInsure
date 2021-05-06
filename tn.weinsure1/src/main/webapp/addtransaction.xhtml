@@ -182,12 +182,12 @@
 							<tr>
 								<td><h:outputText class="form-control"
 										value="Type Transaction"></h:outputText></td>
-								<td><h:selectOneMenu value="#transacController.transactionType}" class="form-control">
-										<f:selectItem itemLabel="Choisir le type " class="form-control" />
-								 
-    									<f:selectItem itemValue="PAYPAL"    								 
-											class="form-control" />
-									</h:selectOneMenu></td>	
+				 <td>
+                                                                <h:selectOneMenu value="#{transacController.transactionType}" class="form-control">
+                                                                    <f:selectItem itemLabel="Choisir le Type" class="form-control" />
+                                                                    <f:selectItems value="#{transacController.getTypess()}" class="form-control" />
+                                                                </h:selectOneMenu>
+                                                            </td>
 									
 									
 							</tr>
@@ -219,7 +219,7 @@
 											
 											 <h:button
 											styleClass="form-group btn btn-sm btn-outline-dark" 
-											value="Retour" outcome="FirstClient" /><span
+											value="Retour" outcome="TransactionUser" /><span
 										STYLE="padding: 0 0 0 20px;"></span> <!-- action = "/temm?faces-redirect=true"   -->
 										<h:message for="btn3" /></td> </tr> 
 

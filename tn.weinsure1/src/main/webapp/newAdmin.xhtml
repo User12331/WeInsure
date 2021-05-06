@@ -66,7 +66,7 @@
 										<h:commandButton styleClass="form-group btn btn-sm btn-outline-primary" style="width:100px"
 										value="Informations" action="#{sinController.displaySinistre(sinistre)}" />
 										<h:commandButton styleClass=" form-group btn btn-sm btn-outline-danger" style="width:100px"
-										 action="#{sinController.removeSinistre(sinistre.idSinistre)}" value="Supprimer"  />
+										 action="#{sinController.removeSinistre2(sinistre.idSinistre)}" value="Supprimer"  />
 										 <c:choose>
 							<c:when test="#{sinistre.typeSinistre.toString().equals('VieEntiere')}">
 						 <h:commandButton styleClass=" form-group btn btn-sm btn-outline-success" style="width:100px"

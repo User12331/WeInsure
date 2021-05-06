@@ -200,4 +200,5 @@ public class TransactionServiceImpl implements ITransactionService {
 		return (List<Transaction>) transactionRepository.findAllByIdTran();
 	}
 
+
 }
