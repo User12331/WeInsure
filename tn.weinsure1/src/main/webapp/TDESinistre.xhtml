@@ -3,6 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:s="http://xmlns.jcp.org/jsf/passthrough"
+                  xmlns:p="http://primefaces.org/ui"
                 >
 <head>
     
@@ -51,7 +52,7 @@
             </a>
            <nav>
                 
- <nav>
+
                 
 <ul class="sh-header__menu">
                     
@@ -211,7 +212,7 @@
   
                                                    
  <tr>
-                                    <td><h:outputText value="Sinister Type"></h:outputText></td>
+                                    <td><h:outputText class="form-control" value="Sinister Type"></h:outputText></td>
                                     <td><h:inputText disabled="true" value="TemporairedecesEmprunteur"  class="form-control"></h:inputText></td>
                                 </tr>
                                                  
@@ -253,6 +254,18 @@
                                             </h:panelGroup>
             </div>
         </div>
+                <div class="container">
+        <!--sections-->
+        	<p:audio value="/media/guide2.ogg"
+             controls="true"
+             onplay="console.log('OGG Started Playing')"
+             onpause="console.log('OGG Stopped Playing')">
+        Your browser does not support the audio element.
+        See: <h:outputLink value="https://www.w3schools.com/html/html5_audio.asp">HTML5 Audio</h:outputLink>
+    </p:audio>
+<div class="row">
+</div>
+</div>
    </main>
 <!-- FOOTER --><footer>
     
