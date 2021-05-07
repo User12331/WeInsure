@@ -99,5 +99,13 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
 	
 	/*@Query("select c from Contract c order by c.duration desc")
 	public List<Contract> sortByDuration();*/
+	   @Query("select c from Contract c WHERE c.Type = 'casDeces' ")
+	    public Contract findContrat();
+	   @Query("select c from Contract c WHERE c.Type = 'VieEntiere' ")
+	    public Contract findContrat2();
+	   @Query("select c from Contract c WHERE c.Type = 'TemporairedecesEmprunteur' ")
+	    public Contract findContrat3();
+	   @Query("select c from Contract c  JOIN c.user u Join u.sinisterList l where l.typeSinistre ='casDecesperiodique' AND c.Type = 'casDecesperiodique' AND u.id=:id ")
+	    public Contract findContrat4(@Param("id")long id);
 
 }

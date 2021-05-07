@@ -513,6 +513,29 @@ public Contract retrieveContractsbytype2(ContractType type) {
 		List<Contract> cnt = ContractRepository.sortByDuration();
 		return cnt;
 	}*/
+	@Override
+	public Contract findContrat1(){
+		Contract c = ContractRepository.findContrat();
+		return c ;
+	}
+	@Override
+	public Contract findContrat2(){
+		Contract c = ContractRepository.findContrat2();
+		return c ;
+	}
+
+	@Override
+	public Contract findContrat3(){
+		Contract c = ContractRepository.findContrat3();
+		return c ;
+	}
+
+	@Override
+	public Contract findContrat4(Long id){
+		Contract c = ContractRepository.findContrat4(id);
+		return c ;
+	}
+
 
 
 }

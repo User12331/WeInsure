@@ -1,5 +1,5 @@
 package tn.weinsure1.service;
-import java.io.File; 
+import java.io.File;  
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
+import java.math.BigInteger;
 
+import java.util.Map;
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
@@ -43,7 +45,7 @@ import tn.weinsure1.repository.ContractRepository;
 import tn.weinsure1.repository.TableMortalitéRepository;
 import tn.weinsure1.repository.UserRepository;
 import tn.weinsure1.repository.sinisterRepository;
-
+ 
 @Service
 public class sinisterServiceImpl implements IsinisterService {
 	
@@ -650,7 +652,23 @@ public class sinisterServiceImpl implements IsinisterService {
 	public int countTDE(){
 		return sinistreRepository.CountSinsTDE();
 	}
-	
+
+		@Override
+			public  List<Map<String, BigInteger>> statistiqueSinisters() {
+			System.err.println(sinistreRepository.statistiqueSinisters());
+			return sinistreRepository.statistiqueSinisters();
+			}
+		@Override
+		public  List<Map<String, BigInteger>> statistiqueSinisters2() {
+		System.err.println(sinistreRepository.statistiqueSinisters2());
+		return sinistreRepository.statistiqueSinisters2();
+		}
+		
+		@Override
+		public  List<Map<String, BigInteger>> statistiqueSinisters3() {
+		System.err.println(sinistreRepository.statistiqueSinisters3());
+		return sinistreRepository.statistiqueSinisters3();
+		}
 	
 	
 	

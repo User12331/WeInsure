@@ -1,8 +1,10 @@
 package tn.weinsure1.service;
 
-import java.text.ParseException; 
-import java.util.List;
+import java.text.ParseException;  
 
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Map;
 import javax.mail.MessagingException;
 
 import org.springframework.data.repository.query.Param;
@@ -58,7 +60,9 @@ public interface IsinisterService {
  	public int countVE();
  	public int countCD();
  	public int countTDE();
- 	 
+ 	List<Map<String, BigInteger>> statistiqueSinisters();
+ 	List<Map<String, BigInteger>> statistiqueSinisters2();
+ 	List<Map<String, BigInteger>> statistiqueSinisters3();
  
 	 
 

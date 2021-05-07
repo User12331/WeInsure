@@ -2,7 +2,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                
+                  xmlns:p="http://primefaces.org/ui"
                 >
 <head>
     
@@ -18,7 +18,7 @@
     
 <meta name="author" content="etheme.com" />
     
-<title>Sharehub - Responsive HTML5 Template</title>
+<title>WeInsure</title>
     <!-- STYLESHEET -->
     <!-- FONTS -->
     <!-- Muli -->
@@ -51,19 +51,46 @@
                 <img src="fonts/icons/sharehub/svg/Sharehub.svg" alt="" />
             </a>
             
- <nav>
+  <nav>
                 
 <ul class="sh-header__menu">
                     
 <li>
-                        <a href="/TransactionUser.jsf">Transactions</a>
+                        <a href="/TransactionUser.jsf">Your Transactions</a>
+                        
+
+                    </li>
+                  
+                   
+              
+                    
+<li>
+                        <a href="/addtransaction.jsf">Add Transactions</a>
+                        
+
+                    </li>
+                  
+                
+              
+                    
+<li>
+                        <a href="/InterFaceSinister.jsf">Interface Sinisters</a>
+                        
+
+                    </li>
+                    
+         
+                     
+                   
+                    
+<li>
+                        <a href="/affichagedetail.jsf">Your Sinisters</a>
                         
 
                     </li>
                     </ul>
+                   
                     </nav>
-
-
             
 <div class="sh-header__search">
                 <form action="#">
@@ -164,6 +191,7 @@
     </div>
     
 </header>
+
 <!-- MAIN -->
 
     
@@ -171,6 +199,25 @@
         <!--sections-->
         
 <div class="row">
+<div class="col-lg-4">
+       <div class="sh-section" >
+       <div class="sh-section__head">
+       <h3 class="title-5 m-b-35">Welcome</h3>
+       </div>
+       <div class="sh-section__content">
+
+             		<p:audio value="/media/voice.ogg"
+             controls="true"
+             onplay="console.log('OGG Started Playing')"
+             onpause="console.log('OGG Stopped Playing')">
+        Your browser does not support the audio element.
+        See: <h:outputLink value="https://www.w3schools.com/html/html5_audio.asp">HTML5 Audio</h:outputLink>
+    </p:audio>
+                              
+             </div>
+             </div>
+               </div>
+                
 <div class="col-lg-4">
        <div class="sh-section" >
        <div class="sh-section__head">
@@ -252,9 +299,11 @@
              </div>
                </div>
                </div>
+               
                </div>
 
 <!-- FOOTER --><footer>
+
 </footer>
 </body>
 </ui:composition>

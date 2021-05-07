@@ -1,10 +1,14 @@
 package tn.weinsure1.repository;
 
-import java.util.List;   
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
@@ -52,6 +56,14 @@ public interface sinisterRepository  extends CrudRepository<sinister, Long> {
 	public int CountSinsCD();
     @Query("Select count(*) from sinister s WHERE s.typeSinistre = 'TemporairedecesEmprunteur'")
 	public int CountSinsTDE();
+    @Query("Select s.typeSinistre as typeSinistre , count(*) as nombre_sinisters from sinister s Group By s.typeSinistre ")
+	public List<Map<String,BigInteger>> statistiqueSinisters();
+    @Query("Select s.status as status , count(*) as nombre_sinisters from sinister s Group By s.status ")
+	public List<Map<String,BigInteger>> statistiqueSinisters2();
+    @Query("Select s.user.firstName as name , count(*) as nombre_sinisters from sinister s Group By s.user.firstName ")
+	public List<Map<String,BigInteger>> statistiqueSinisters3();
+ 
+
 
 
 

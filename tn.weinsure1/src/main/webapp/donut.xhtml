@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="/template/template.xhtml">
+
+    <ui:param name="page_name" value="Statistiques Contrats" />
+
+    <ui:define name="menu">
+        <h:head>
+            <title>Statistiques Sinisters</title>
+        </h:head>
+            <h:body class="animsition">
+                <!-- PAGE CONTAINER-->
+
+                <div class="page-container">
+
+                    <!-- MAIN CONTENT-->
+
+                    <div class="main-content">
+
+
+                        <p:chart type="pie" model="#{sinController.barchart}" rendered="true" />
+                        
+                        <p:chart type="pie" model="#{sinController.barchartt}" rendered="true" />
+                        
+                          <p:chart type="pie" model="#{sinController.barcharttt}" rendered="true" />
+                        
+
+                    </div>
+                </div>
+           </h:body>
+</ui:define>
+</ui:composition>

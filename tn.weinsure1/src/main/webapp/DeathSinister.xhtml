@@ -2,7 +2,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                
+                xmlns:s="http://xmlns.jcp.org/jsf/passthrough"
                 >
 <head>
     
@@ -18,7 +18,7 @@
     
 <meta name="author" content="etheme.com" />
     
-<title>Sharehub - Responsive HTML5 Template</title>
+<title>WeInsure</title>
     <!-- STYLESHEET -->
     <!-- FONTS -->
     <!-- Muli -->
@@ -56,13 +56,41 @@
 <ul class="sh-header__menu">
                     
 <li>
-                        <a href="/TransactionUser.jsf">Transactions</a>
+                        <a href="/TransactionUser.jsf">Your Transactions</a>
+                        
+
+                    </li>
+                  
+                   
+              
+                    
+<li>
+                        <a href="/addtransaction.jsf">Add Transactions</a>
+                        
+
+                    </li>
+                  
+                
+              
+                    
+<li>
+                        <a href="/InterFaceSinister.jsf">Interface Sinisters</a>
+                        
+
+                    </li>
+                    
+         
+                     
+                   
+                    
+<li>
+                        <a href="/affichagedetail.jsf">Your Sinisters</a>
                         
 
                     </li>
                     </ul>
+                   
                     </nav>
-
             
 <div class="sh-header__search">
                 <form action="#">
@@ -172,7 +200,7 @@
 <div class="row">
        
  <h:panelGroup columns="2">
-                                                <h:form>
+                                                <h:form id="hihi">
                                                     <table class="table table-data2">
 
   
@@ -185,8 +213,9 @@
                                                         <tr>
                                                             <td><h:outputText class="form-control" value="Date de Occurence"></h:outputText></td>
                                                             <td>
-                                                                <h:inputText  class="form-control" value="#{sinController.dateOccurence}" >
+                                                                <h:inputText id="awah" class="form-control" value="#{sinController.dateOccurence}"  s:placeholder="dd-MM-yyyy" >
                                                                     <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                                     <h:message for="awah"></h:message>
                                                                 </h:inputText>
                                                             </td>
                                                             
@@ -195,11 +224,12 @@
                                 
                                                                 <tr>
                                                             <td><h:outputText class="form-control" value="Description"></h:outputText></td>
+                                                            
                                                             <td>
                                                              <h:inputTextarea cols="50" rows="5" id="des"
 											value="#{sinController.description}"
-											style="border: 1px solid #0973D2" required="true"
-											requiredMessage=" Required *" />
+											style="border: 1px solid #0973D2"  />
+											<h:message for="des"></h:message>
                                                                   
                                                               
                                                             </td>
@@ -207,8 +237,8 @@
                                                         <tr>
                                                             <td colspan="2">
                                                             <div class="button">
-                                                               <h:commandButton styleClass="form-group btn btn-sm btn-outline-primary" style="width:100px" value="Ajouter Sinister" action="#{sinController.addSinistreCD()}"   />
-                                                                <h:message for="btn" />
+                                                               <h:commandButton id="lol" styleClass="form-group btn btn-sm btn-outline-primary" style="width:100px" value="Ajouter Sinister" action="#{sinController.addSinistreCD()}"   />
+                                                <h:message for="lol"></h:message>
                                                                 <span STYLE="padding:0 0 0 20px;"></span>
                                                                    
                                                             </div>

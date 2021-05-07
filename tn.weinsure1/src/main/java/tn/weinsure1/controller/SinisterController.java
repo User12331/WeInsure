@@ -1,11 +1,13 @@
 package tn.weinsure1.controller;
 
-import java.io.IOException; 
+import java.io.IOException;   
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -15,7 +17,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
-import org.primefaces.model.UploadedFile;
+
+import org.primefaces.model.chart.PieChartModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -68,7 +71,19 @@ public class SinisterController {
 	private SinisterMotif motifStatus;
 	private Contract tempC ;
 	private ContractType m ; 
-
+	private PieChartModel barchart ;
+	private PieChartModel barchartt ;
+	private PieChartModel barcharttt ;
+	
+	public void setBarcharttt(PieChartModel barcharttt) {
+		this.barcharttt = barcharttt;
+	}
+	public void setBarchartt(PieChartModel barchart) {
+		this.barchartt = barchartt;
+	}
+	public void setBarchart(PieChartModel barchart) {
+		this.barchart = barchart;
+	}
 	public ContractType getM() {
 		return m;
 	}
@@ -224,8 +239,16 @@ public class SinisterController {
 				    	+ "Please check occurence Date");
 			FacesContext.getCurrentInstance().addMessage("hihi:awah", facesMessage);
 			}
-	
+			if( description.isEmpty() ==true){
+				FacesMessage facesMessage= new FacesMessage("Veuillez decrire votre Sinistre");
+			FacesContext.getCurrentInstance().addMessage("hihi:des", facesMessage);
+			}
+			if( cs.findContrat2()==null){
+				FacesMessage facesMessage= new FacesMessage("Vous avez beosin d'un contrat");
+			FacesContext.getCurrentInstance().addMessage("hihi:lol", facesMessage);
+			}
 			else {
+
 				sinService.addOrUpdateSinistre(new sinister(typeSinistre.VieEntiere, description, dateOccurence, sinisterstatus.enAttente,documents,us.getOne(5L)));
 				navigateTo = "/affichagedetail?faces-redirect=true" ;
 				}
@@ -246,9 +269,18 @@ public class SinisterController {
 				    	+ "Please check occurence Date");
 			FacesContext.getCurrentInstance().addMessage("hihi:awah", facesMessage);
 			}
+			if( description.isEmpty() ==true){
+				FacesMessage facesMessage= new FacesMessage("Veuillez decrire votre Sinistre");
+			FacesContext.getCurrentInstance().addMessage("hihi:des", facesMessage);
+			}
+			if( cs.findContrat1()==null){
+				FacesMessage facesMessage= new FacesMessage("Vous avez beosin d'un contrat");
+			FacesContext.getCurrentInstance().addMessage("hihi:lol", facesMessage);
+			}
+			
 			else {
 				
-				sinService.addOrUpdateSinistre(new sinister(typeSinistre.casDeces, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.casDeces, description, dateOccurence, sinisterstatus.enAttente, documents,us.getOne(5L)));
 				navigateTo = "/affichagedetail?faces-redirect=true" ;
 				}
 			return navigateTo; 
@@ -266,10 +298,18 @@ public class SinisterController {
 			if( dateOccurence.compareTo(d1) <0 ){
 				FacesMessage facesMessage= new FacesMessage("Date Invalid: "
 				    	+ "Please check occurence Date");
-			FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+			FacesContext.getCurrentInstance().addMessage("hihi:awah", facesMessage);
+			}
+			if( description.isEmpty() ==true){
+				FacesMessage facesMessage= new FacesMessage("Veuillez decrire votre Sinistre");
+			FacesContext.getCurrentInstance().addMessage("hihi:des", facesMessage);
+			}
+			if( cs.findContrat4(8L)==null){
+				FacesMessage facesMessage= new FacesMessage("Vous avez beosin d'un contrat");
+			FacesContext.getCurrentInstance().addMessage("hihi:lol", facesMessage);
 			}
 			else {
-				sinService.addOrUpdateSinistre(new sinister(typeSinistre.casDecesperiodique, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.casDecesperiodique, description, dateOccurence, sinisterstatus.enAttente, documents,us.getOne(8L)));
 				navigateTo = "/affichagedetail?faces-redirect=true" ;
 				}
 			return navigateTo; 
@@ -287,10 +327,18 @@ public class SinisterController {
 			if( dateOccurence.compareTo(d1) <0 ){
 				FacesMessage facesMessage= new FacesMessage("Date Invalid: "
 				    	+ "Please check occurence Date");
-			FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+			FacesContext.getCurrentInstance().addMessage("hihi:awah", facesMessage);
+			}
+			if( description.isEmpty() ==true){
+				FacesMessage facesMessage= new FacesMessage("Veuillez decrire votre Sinistre");
+			FacesContext.getCurrentInstance().addMessage("hihi:des", facesMessage);
+			}
+			if( cs.findContrat3()==null){
+				FacesMessage facesMessage= new FacesMessage("Vous avez beosin d'un contrat");
+			FacesContext.getCurrentInstance().addMessage("hihi:lol", facesMessage);
 			}
 			else {
-				sinService.addOrUpdateSinistre(new sinister(typeSinistre.TemporairedecesEmprunteur, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+				sinService.addOrUpdateSinistre(new sinister(typeSinistre.TemporairedecesEmprunteur, description, dateOccurence, sinisterstatus.enAttente, documents,us.getOne(5L)));
 				navigateTo = "/affichagedetail?faces-redirect=true" ;
 				}
 			return navigateTo; 
@@ -337,7 +385,7 @@ public class SinisterController {
 		
 		public String updateSinistre()
 		{  
-		  sinService.addOrUpdateSinistre(new sinister(sinistreIdToBeUpdated,typeSinistre, description, dateOccurence, sinisterstatus.enAttente, documents,user));
+		  sinService.addOrUpdateSinistre(new sinister(sinistreIdToBeUpdated,typeSinistre, description, dateOccurence, sinisterstatus.enAttente, documents,us.getOne(5L)));
 		return "/affichagedetail?faces-redirect=ture";
 		}
 		
@@ -442,6 +490,41 @@ public class SinisterController {
 					return  sinService.countCD() ;	}
 			   public int caL3(){
 					return   sinService.countTDE() ;	}
+			   
+			   
+				public PieChartModel getBarchart() {
+					barchart = new PieChartModel();
+					List<Map<String, BigInteger>> jj = sinService.statistiqueSinisters();
+					for ( int i =0 ; i<jj.size() ; i++){
+						//Integer[] aKeys = jj.get(i).keySet().toArray(new Integer[jj.get(i).size()]);
+						barchart.set(String.valueOf(jj.get(i).get("typeSinistre")),jj.get(i).get("nombre_sinisters"));
+					}		
+					barchart.setTitle("Sinister par Type");
+					barchart.setLegendPosition("w");
+					return barchart;
+				}
+				public PieChartModel getBarchartt() {
+					barchartt = new PieChartModel();
+					List<Map<String, BigInteger>> jj = sinService.statistiqueSinisters2();
+					for ( int i =0 ; i<jj.size() ; i++){
+						//Integer[] aKeys = jj.get(i).keySet().toArray(new Integer[jj.get(i).size()]);
+						barchartt.set(String.valueOf(jj.get(i).get("status")),jj.get(i).get("nombre_sinisters"));
+					}		
+					barchartt.setTitle("Sinister par Status");
+					barchartt.setLegendPosition("w");
+					return barchartt;
+				}
+				public PieChartModel getBarcharttt() {
+					barcharttt = new PieChartModel();
+					List<Map<String, BigInteger>> jj = sinService.statistiqueSinisters3();
+					for ( int i =0 ; i<jj.size() ; i++){
+						//Integer[] aKeys = jj.get(i).keySet().toArray(new Integer[jj.get(i).size()]);
+						barcharttt.set(String.valueOf(jj.get(i).get("name")),jj.get(i).get("nombre_sinisters"));
+					}		
+					barcharttt.setTitle("Sinister par UserName");
+					barcharttt.setLegendPosition("w");
+					return barcharttt;
+				}
 			
 			
 			
